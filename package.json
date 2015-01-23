@@ -1,0 +1,24 @@
+{
+  "name": "FGJ15",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jgke/FGJ15.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jgke/FGJ15/issues"
+  },
+  "homepage": "https://github.com/jgke/FGJ15",
+  "dependencies": {
+    "gulp": "^3.8.10",
+    "gulp-typescript": "^2.4.1",
+    "typescript": "^1.4.1"
+  }
+}

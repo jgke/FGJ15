@@ -1,0 +1,20 @@
+{
+  "name": "FGJ15",
+  "version": "0.0.0",
+  "homepage": "https://github.com/jgke/FGJ15",
+  "authors": [
+    "Juhani Imberg <juhani@imberg.fi>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "phaser": "~2.2.2"
+  }
+}
