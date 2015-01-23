@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jgke/FGJ15",
   "dependencies": {
+    "event-stream": "^3.2.1",
     "gulp": "^3.8.10",
     "gulp-typescript": "^2.4.1",
     "typescript": "^1.4.1"
