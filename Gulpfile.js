@@ -14,6 +14,12 @@ gulp.task('static', function() {
     );
 });
 
+gulp.task('assets', function() {
+    return eventStream.merge(
+        gulp.src("assets/*").pipe(gulp.dest("build/assets/"))
+    );
+});
+
 gulp.task('vendor', function() {
     return eventStream.merge(
         gulp.src("bower_components/phaser/build/phaser.min.js").pipe(gulp.dest("build/vendor")),
@@ -33,6 +39,7 @@ gulp.task('scripts', function() {
 gulp.task('watch', ['scripts'], function() {
     gulp.watch('src/*.ts', ['scripts', 'vendor']);
     gulp.watch('static/*', ['static']);
+    gulp.watch('assets/*', ['assets']);
 });
 
-gulp.task('default', ['static', 'scripts', 'vendor']);
+gulp.task('default', ['static', 'scripts', 'assets', 'vendor', 'watch']);
