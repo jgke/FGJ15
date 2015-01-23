@@ -4,21 +4,35 @@ var gulp = require("gulp");
 
 var tsProject = ts.createProject({
     declarationFiles: false,
-    noExternalResolve: false
+    noExternalResolve: false,
+    module: "amd"
+});
+
+gulp.task('static', function() {
+    return eventStream.merge(
+        gulp.src("static/*").pipe(gulp.dest("build/"))
+    );
+});
+
+gulp.task('vendor', function() {
+    return eventStream.merge(
+        gulp.src("bower_components/phaser/build/phaser.min.js").pipe(gulp.dest("build/vendor")),
+        gulp.src("bower_components/requirejs/require.js").pipe(gulp.dest("build/vendor"))
+    );
 });
 
 gulp.task('scripts', function() {
     var tsResult = gulp.src('src/*.ts').pipe(ts(tsProject));
-    var staticResult = gulp.src("static/*").pipe(gulp.dest("build/"));
-    var vendorPhaser = gulp.src("bower_components/phaser/build/phaser.min.js").pipe(gulp.dest("build/vendor"));
 
-    return eventStream.merge( // Merge the two output streams, so this task is finished when the IO of both operations are done.
-        staticResult,
-        vendorPhaser,
+    return eventStream.merge(
         tsResult.dts.pipe(gulp.dest('build/definitions')),
         tsResult.js.pipe(gulp.dest('build/js'))
     );
 });
+
 gulp.task('watch', ['scripts'], function() {
-    gulp.watch('src/*.ts', ['scripts']);
+    gulp.watch('src/*.ts', ['scripts', 'vendor']);
+    gulp.watch('static/*', ['static']);
 });
+
+gulp.task('default', ['static', 'scripts', 'vendor']);
