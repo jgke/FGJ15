@@ -13,6 +13,8 @@ export class Preloader extends Phaser.State {
         this.load.image('sky720', 'assets/sky720.png');
         this.load.image('city720', 'assets/city720.png');
         this.load.image('road720', 'assets/road720.png');
+        this.load.image('eugene', 'assets/Eugene.png');
+        this.load.image('douglas', 'assets/Douglas.png');
         this.load.audio('bgm', 'assets/mix3FGJ2015.ogg');
     }
 

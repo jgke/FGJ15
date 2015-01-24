@@ -6,15 +6,9 @@ export class Character extends Phaser.Sprite {
     speed: number;
     type: number;
 
-    public constructor(game: Phaser.Game, x: number, y: number, type: number, ground: Array<Chunk.Chunk>) {
-        super(game, x, y, 'place1');
+    public constructor(game: Phaser.Game, x: number, y: number, image: string, type: number, ground: Array<Chunk.Chunk>) {
+        super(game, x, y, image);
         switch(type) {
-            case 0:
-                this.tint = 0xff00ff;
-                break;
-            case 1:
-                this.tint = 0x00ffff;
-                break;
             case 2:
                 this.tint = 0x0000ff;
                 break;

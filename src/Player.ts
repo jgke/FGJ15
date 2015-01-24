@@ -18,8 +18,10 @@ export class Player extends Phaser.Group {
         this.bullets = new Phaser.Group(this.game);
         this.ground = ground;
 
+        var asd = ["eugene", "douglas", "place4", "place4"];
         for(var i = 0; i < 4; i++) {
-            var character = new Character.Character(game, 500 + 64 * i, y, i, ground);
+
+            var character = new Character.Character(game, 500 + 64 * i, y, asd[i], i, ground);
             character.speed = this.speed;
             if(i == 3) {
                 this.current = character;
