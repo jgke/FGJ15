@@ -32,7 +32,7 @@ var chunks = [
         [0, 0, 0, 0],
         [1, 0, 0, 1],
         [0, 1, 1, 0],
-    ]
+    ],
 ];
 
 /*
@@ -42,9 +42,9 @@ var chunks = [
 
 export class Chunk extends Phaser.Group {
     diff: number;
-    constructor(game: Phaser.Game, offset: number) {
+    constructor(game: Phaser.Game, id: number, offset: number) {
         super(game);
-        var data = chunks[Math.floor(Math.random() * chunks.length)];
+        var data = chunks[id];
         this.diff = data[0].length;
         for(var y = 0; y < data.length; y++) {
             for(var x = 0; x < data[y].length; x++) {
@@ -54,5 +54,19 @@ export class Chunk extends Phaser.Group {
                 }
             }
         }
+    }
+}
+
+export class ChunkFactory {
+    game: Phaser.Game;
+    offset: number;
+    constructor(game: Phaser.Game) {
+        this.game = game;
+        this.offset = 0;
+    }
+    newChunk() {
+        var chunk = new Chunk(this.game, Math.floor(Math.random() * chunks.length), this.offset);
+        this.offset += chunk.diff;
+        return chunk;
     }
 }
