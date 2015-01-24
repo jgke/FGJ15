@@ -9,6 +9,9 @@ export class Player extends Phaser.Group {
     bullets: Phaser.Group;
     current: Character.Character;
     ground: Array<Chunk.Chunk>;
+    xhist: Array<number>;
+    yhist: Array<number>;
+    histsize: number = 30;
     constructor(game: Phaser.Game, x: number, y: number, ground: Array<Chunk.Chunk>) {
         super(game);
 
@@ -17,6 +20,12 @@ export class Player extends Phaser.Group {
         this.currentShotCD = this.shotCD;
         this.bullets = new Phaser.Group(this.game);
         this.ground = ground;
+        this.xhist = [];
+        this.yhist = [];
+        for(var i = 0; i < this.histsize; i++) {
+            this.xhist.push(0);
+            this.yhist.push(0);
+        }
 
         for(var i = 0; i < 4; i++) {
 
@@ -54,20 +63,13 @@ export class Player extends Phaser.Group {
     }
 
     jump() {
-        /*for(var thing in this.children) {
-            (<Character.Character>this.children[thing]).jump();
-        }*/
         if(this.current.jumpable()) {
-            for (var thing in this.children) {
-                (<Character.Character>this.children[thing]).newjump(this.current.position.x);
-            }
+            this.current.jump();
         }
     }
 
     setVel(x: number) {
-        for(var thing in this.children) {
-            (<Phaser.Sprite>this.children[thing]).body.maxVelocity.setTo(x, 5000);
-        }
+        this.current.body.maxVelocity.setTo(x, 5000);
     }
 
     update() {
@@ -93,6 +95,15 @@ export class Player extends Phaser.Group {
         }
 
         var relX = this.current.position.x - this.game.camera.x;
+        this.xhist.shift();
+        this.yhist.shift();
+        this.xhist.push(this.current.position.x);
+        this.yhist.push(this.current.position.y);
+        var modifier = 0;
+        for(var i = 0; i < 3; i++) {
+            this.children[i].position.x = this.xhist[i*10];
+            this.children[i].position.y = this.yhist[i*10];
+        }
 
         if(relX < -64) {
             this.game.state.start('GameOver');
