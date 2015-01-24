@@ -2,6 +2,7 @@ import Boot = require("./Boot");
 import Preloader = require("./Preloader");
 import MainMenu = require("./MainMenu");
 import Level = require("./Level");
+import GameOver = require("./GameOver");
 
 export class Game extends Phaser.Game {
     constructor() {
@@ -10,6 +11,7 @@ export class Game extends Phaser.Game {
         this.state.add('Preloader', Preloader.Preloader, false);
         this.state.add('MainMenu', MainMenu.MainMenu, false);
         this.state.add('Level', Level.Level, false);
+        this.state.add('GameOver', GameOver.GameOver, false);
         this.state.start('Boot');
     }
 }
