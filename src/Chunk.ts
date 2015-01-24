@@ -41,16 +41,19 @@ var chunks = [
  */
 
 export class Chunk extends Phaser.Group {
-    diff: number;
+    diffX: number;
+    diffY: number = 6;
     constructor(game: Phaser.Game, id: number, offset: number) {
         super(game);
         var data = chunks[id];
-        this.diff = data[0].length;
+        this.diffX = data[0].length;
         for(var y = 0; y < data.length; y++) {
             for(var x = 0; x < data[y].length; x++) {
                 switch(data[y][x]) {
                     case 1:
-                        this.add(new GroundTile.GroundTile(this.game, offset * 64 + x * 64, y * 64));
+                        this.add(new GroundTile.GroundTile(this.game,
+                                                           offset * 64 + x * 64,
+                                                           y * 64 + (game.height - 64 * this.diffY)));
                 }
             }
         }
@@ -66,7 +69,7 @@ export class ChunkFactory {
     }
     newChunk() {
         var chunk = new Chunk(this.game, Math.floor(Math.random() * chunks.length), this.offset);
-        this.offset += chunk.diff;
+        this.offset += chunk.diffX;
         return chunk;
     }
 }

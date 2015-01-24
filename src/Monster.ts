@@ -4,7 +4,7 @@ export class Monster extends Phaser.Sprite {
     type: number;
     ground: Array<Chunk.Chunk>;
     hp: number;
-    maxhp: number = 3;
+    maxhp: number = 2;
     constructor(game: Phaser.Game, x: number, y: number, type: number) {
         super(game, x, y, "place4");
         this.type = type;
@@ -20,6 +20,9 @@ export class Monster extends Phaser.Sprite {
         this.game.physics.arcade.collide(this, this.ground, null, null, this);
         if(this.body.onFloor() || this.body.touching.down) {
             this.body.velocity.y -= 800;
+        }
+        if(this.game.camera.x > this.position.x + 64) {
+            this.kill();
         }
     }
 

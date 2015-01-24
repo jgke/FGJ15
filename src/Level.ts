@@ -9,6 +9,7 @@ export class Level extends Phaser.State {
     monsters: Phaser.Group;
     genpos: number;
     lastdelpos: number;
+    bgm: Phaser.Sound;
 
     create() {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -21,6 +22,10 @@ export class Level extends Phaser.State {
         this.player.ground = this.chunks;
         this.lastdelpos = 400;
         this.chunkFactory = new Chunk.ChunkFactory(this.game);
+        this.game.sound.stopAll();
+        this.bgm = this.game.add.audio('bgm');
+        this.bgm.loop = true;
+        this.bgm.play();
 
         for(var i = 0; i < 12; i++) {
             this.addChunk();
@@ -30,8 +35,8 @@ export class Level extends Phaser.State {
 
     addChunk() {
         this.chunks.push(this.chunkFactory.newChunk());
-        this.genpos += this.chunks[this.chunks.length - 1].diff;
-        this.game.world.setBounds(0, 0, this.genpos * 64, 64 * 6);
+        this.genpos += this.chunks[this.chunks.length - 1].diffX;
+        this.game.world.setBounds(0, 0, this.genpos * 64, this.game.height);
     }
 
     removeChunk() {
