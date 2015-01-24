@@ -8,6 +8,17 @@ export class Character extends Phaser.Sprite {
 
     public constructor(game: Phaser.Game, x: number, y: number, type: number, ground: Array<Chunk.Chunk>) {
         super(game, x, y, 'place1');
+        switch(type) {
+            case 0:
+                this.tint = 0xff00ff;
+                break;
+            case 1:
+                this.tint = 0x00ffff;
+                break;
+            case 2:
+                this.tint = 0x0000ff;
+                break;
+        }
         this.type = type;
         this.anchor = new Phaser.Point(0.5, 0.5);
         game.add.existing(this);

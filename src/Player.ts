@@ -21,7 +21,7 @@ export class Player extends Phaser.Group {
         for(var i = 0; i < 4; i++) {
             var character = new Character.Character(game, 500 + 64 * i, y, i, ground);
             character.speed = this.speed;
-            if(i == 0) {
+            if(i == 3) {
                 this.current = character;
             }
             this.add(character);
@@ -51,6 +51,11 @@ export class Player extends Phaser.Group {
         this.game.physics.arcade.collide(this, this.ground, null, null, this);
         this.game.camera.x += this.speed;
 
+
+        if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+            this.jump();
+        }
+
         var relX = this.current.position.x - this.game.camera.x;
 
         if(relX < -64) {
@@ -67,10 +72,6 @@ export class Player extends Phaser.Group {
         this.currentShotCD--;
         if(this.currentShotCD <= 0) {
             this.shoot();
-        }
-
-        if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-            this.jump();
         }
     }
 }

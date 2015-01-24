@@ -2,6 +2,7 @@ export class Preloader extends Phaser.State {
     preloadBar: Phaser.Sprite;
     preload() {
         this.preloadBar = this.add.sprite(this.game.width/2, this.game.height/2, 'preloadBar');
+        this.preloadBar.scale.x = this.game.width/this.preloadBar.width;
         this.preloadBar.anchor = new Phaser.Point(0.5, 0.5);
         this.load.setPreloadSprite(this.preloadBar);
 
