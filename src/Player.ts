@@ -58,7 +58,6 @@ export class Player extends Phaser.Group {
             (<Character.Character>this.children[thing]).jump();
         }*/
         if(this.current.jumpable()) {
-            console.log("l");
             for (var thing in this.children) {
                 (<Character.Character>this.children[thing]).newjump(this.current.position.x);
             }

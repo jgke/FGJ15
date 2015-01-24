@@ -41,7 +41,7 @@ export class Character extends Phaser.Sprite {
                 texture = "place2";
                 break;
         }
-        this.loadTexture(texture);
+        this.loadTexture(texture, 0);
     }
 
     newjump(x: number) {
@@ -72,10 +72,8 @@ export class Character extends Phaser.Sprite {
         while(this.jumps.length != 0) {
             var x = this.jumps[0];
             if(x > this.position.x) {
-                console.log("b");
                 break;
             }
-            console.log("j");
             this.jumps.shift();
             this.position.y--;
             this.body.velocity.y -= 200;
