@@ -1,4 +1,6 @@
 import Chunk = require("./Chunk");
+import Level = require("./Level");
+import Player = require("./Player");
 
 export class Monster extends Phaser.Sprite {
     ground: Array<Chunk.Chunk>;
@@ -37,15 +39,18 @@ export class Monster extends Phaser.Sprite {
             this.body.velocity.y -= 800;
         }
         if(this.game.camera.x > this.position.x + 64) {
-            this.kill();
+            (<Player.Player>(<Level.Level>this.game.state.getCurrentState()).player).removeHP(10);
+            this.destroy();
         }
     }
 
-    hit() {
+    hit():boolean {
         this.hp--;
         var tween = this.game.add.tween(this).to({ alpha: (this.hp/this.maxhp) }, 100, Phaser.Easing.Linear.None, true);
         if(this.hp <= 0) {
-            this.kill();
+            this.destroy();
+            return true;
         }
+        return false;
     }
 }

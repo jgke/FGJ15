@@ -72,7 +72,7 @@ export class Player extends Phaser.Group {
         this.scoreui.setText("Score: " + this.score);
     }
 
-    removeHealth(n: number) {
+    removeHP(n: number) {
         this.hp -= n;
         this.hpui.setText("HP: " + this.hp);
     }

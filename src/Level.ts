@@ -68,7 +68,9 @@ export class Level extends Phaser.State {
         this.cityimg.tilePosition.x -= 0.75;
         this.roadimg.tilePosition.x -= 1.25;
         this.game.physics.arcade.overlap(this.player.bullets, this.monsters, (bullet, monster) => {
-            monster.hit();
+            if(monster.hit()) {
+                this.player.addScore(100);
+            }
             bullet.kill();
         });
         this.game.physics.arcade.overlap(this.player.bullets, this.chunks, (bullet) => {
