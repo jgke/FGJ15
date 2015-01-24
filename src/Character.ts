@@ -8,6 +8,7 @@ export class Character extends Phaser.Sprite {
     type: number;
     jumps: Array<number>;
     jumping: number = 0;
+    emitter: Phaser.Particles.Arcade.Emitter;
 
     public constructor(game: Phaser.Game, x: number, y: number, type: number, ground: Array<Chunk.Chunk>) {
         super(game, x, y, "place1");
@@ -24,6 +25,16 @@ export class Character extends Phaser.Sprite {
         this.lastTouch = 0;
         this.ground = ground;
         this.jumps = [];
+        this.emitter = this.game.add.emitter(32, 24, 20);
+        this.emitter.autoAlpha = true;
+        this.emitter.setScale(1.5, 3, 1.5, 3, 2000, Phaser.Easing.Quintic.Out);
+        this.emitter.setAlpha(0.15, 0.3);
+        this.emitter.makeParticles("blaze");
+        this.emitter.angle = 100;
+        this.emitter.frequency = 1000;
+        this.emitter.enableBody = true;
+        this.emitter.start(false, 400, 20);
+        this.addChild(this.emitter);
     }
 
     setType(x: number) {
