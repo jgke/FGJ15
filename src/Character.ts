@@ -24,7 +24,7 @@ export class Character extends Phaser.Sprite {
         this.lastTouch = 0;
         this.ground = ground;
         this.jumps = [];
-        this.emitter = this.game.add.emitter(32, 24, 20);
+        this.emitter = this.game.add.emitter(30, 16, 20);
         this.emitter.autoAlpha = true;
         this.emitter.setScale(1.5, 3, 1.5, 3, 2000, Phaser.Easing.Quintic.Out);
         this.emitter.setAlpha(0.15, 0.3);
