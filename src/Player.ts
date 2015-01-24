@@ -1,66 +1,76 @@
 import Chunk = require("./Chunk");
 import Bullet = require("./Bullet");
+import Character = require("./Character");
 
-export class Player extends Phaser.Sprite {
-    ground: Array<Chunk.Chunk>;
-    lastTouch: number;
+export class Player extends Phaser.Group {
     speed: number = 7;
     currentShotCD: number;
     shotCD: number = 15;
     bullets: Phaser.Group;
-    constructor(game: Phaser.Game, x: number, y: number) {
-        super(game, x, y, 'place1');
-        this.anchor = new Phaser.Point(0.5, 0.5);
-        game.add.existing(this);
-        game.physics.arcade.enable(this);
-        /*game.camera.follow(this, Phaser.Camera.FOLLOW_PLATFORMER);
-        game.camera.deadzone = new Phaser.Rectangle(200,380,1,1);*/
+    current: Character.Character;
+    ground: Array<Chunk.Chunk>;
+    constructor(game: Phaser.Game, x: number, y: number, ground: Array<Chunk.Chunk>) {
+        super(game);
+
         game.camera.focusOn(this);
-        this.body.drag.setTo(600, 0);
-        this.body.maxVelocity.setTo(400, 5000);
-        this.ground = [];
-        this.body.collideWorldBounds = false;
+
         this.currentShotCD = this.shotCD;
         this.bullets = new Phaser.Group(this.game);
+        this.ground = ground;
+
+        for(var i = 0; i < 4; i++) {
+            var character = new Character.Character(game, 500 + 64 * i, y, i, ground);
+            character.speed = this.speed;
+            if(i == 0) {
+                this.current = character;
+            }
+            this.add(character);
+        }
     }
 
     shoot() {
         this.currentShotCD = this.shotCD;
-        var bullet = new Bullet.Bullet(this.game, this.position.x, this.position.y, true);
+        var bullet = new Bullet.Bullet(this.game, this.current.position.x, this.current.position.y, true);
         this.bullets.add(bullet);
     }
 
+    jump() {
+        for(var thing in this.children) {
+            (<Character.Character>this.children[thing]).jump();
+        }
+    }
+
+    setVel(x: number) {
+        for(var thing in this.children) {
+            (<Phaser.Sprite>this.children[thing]).body.maxVelocity.setTo(x, 5000);
+        }
+    }
+
     update() {
-        this.game.camera.x += this.speed;
+        super.update();
         this.game.physics.arcade.collide(this, this.ground, null, null, this);
+        this.game.camera.x += this.speed;
 
-        if(this.body.onFloor() || this.body.touching.down) {
-            this.lastTouch = this.game.time.time;
-
-        }
-        if(Date.now() - this.lastTouch < 100) {
-            if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
-                this.body.velocity.y -= 150;
-            }
-        }
-
-        var relX = this.body.position.x - this.game.camera.x;
-        this.body.acceleration.x += this.speed * 8;
+        var relX = this.current.position.x - this.game.camera.x;
 
         if(relX < -64) {
-            this.kill();
             this.game.state.start('GameOver');
+            this.destroy();
         } else if(relX < 200) {
-            this.body.maxVelocity.setTo(this.speed * 70, 5000);
+            this.setVel(this.speed * 70);
         } else if(relX > 300) {
-            this.body.maxVelocity.setTo(this.speed * 50, 5000);
+            this.setVel(this.speed * 50);
         } else {
-            this.body.maxVelocity.setTo(this.speed * 60, 5000);
+            this.setVel(this.speed * 60);
         }
 
         this.currentShotCD--;
         if(this.currentShotCD <= 0) {
             this.shoot();
+        }
+
+        if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
+            this.jump();
         }
     }
 }

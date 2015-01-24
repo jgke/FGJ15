@@ -28,8 +28,7 @@ export class Level extends Phaser.State {
         this.roadimg = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'road720');
         this.roadimg.fixedToCamera = true;
         this.monsters = new Phaser.Group(this.game);
-        this.player = new Player.Player(this.game, 500, 100);
-        this.player.ground = this.chunks;
+        this.player = new Player.Player(this.game, 900, 100, this.chunks);
         this.lastdelpos = 400;
         this.chunkFactory = new Chunk.ChunkFactory(this.game);
         this.game.sound.stopAll();
