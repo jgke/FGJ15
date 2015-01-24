@@ -11,7 +11,7 @@ export class Preloader extends Phaser.State {
 
     create() {
         var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-        tween.onComplete.add(() => {this.game.state.start('MainMenu', true, false)}, this);
+        tween.onComplete.add(() => {this.game.state.start('Level', true, false)}, this);
     }
 
 }

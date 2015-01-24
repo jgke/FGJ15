@@ -8,6 +8,30 @@ var chunks = [
         [0, 0, 0, 0],
         [0, 0, 0, 0],
         [1, 1, 1, 1],
+    ],
+    [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 1, 1, 0],
+        [1, 0, 0, 1],
+    ],
+    [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 1],
+        [0, 0, 1, 0],
+        [1, 1, 0, 0],
+    ],
+    [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [1, 0, 0, 1],
+        [0, 1, 1, 0],
     ]
 ];
 
@@ -17,9 +41,11 @@ var chunks = [
  */
 
 export class Chunk extends Phaser.Group {
+    length: number;
     constructor(game: Phaser.Game, offset: number) {
         super(game);
-        var data = chunks[Math.random() * chunks.length];
+        var data = chunks[Math.floor(Math.random() * chunks.length)];
+        this.length = data[0].length;
         for(var y = 0; y < data.length; y++) {
             for(var x = 0; x < data[y].length; x++) {
                 switch(data[y][x]) {

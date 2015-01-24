@@ -1,18 +1,19 @@
-import Ground = require("./Ground");
+import Chunk = require("./Chunk");
 
 export class Player extends Phaser.Sprite {
-    ground: Ground.Ground;
+    ground: Array<Chunk.Chunk>;
     constructor(game: Phaser.Game, x: number, y: number) {
         super(game, x, y, 'place1');
         this.anchor = new Phaser.Point(0.5, 0.5);
         game.add.existing(this);
         game.physics.arcade.enable(this);
-        this.ground = null;
+        game.camera.follow(this, Phaser.Camera.FOLLOW_PLATFORMER);
+        this.ground = [];
     }
 
     update() {
         this.body.collideWorldBounds = true;
-        var collides = this.game.physics.arcade.collide(this, this.ground, null, null, this);
+        this.game.physics.arcade.collide(this, this.ground, null, null, this);
         var dif = 0;
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.LEFT)) {
             dif = - 50;
@@ -28,6 +29,8 @@ export class Player extends Phaser.Sprite {
         } else {
             dif *= 0.5;
         }
+
+        //dif += 100;
 
         this.body.velocity.x += dif;
         if(this.body.onFloor() || this.body.touching.down) {
