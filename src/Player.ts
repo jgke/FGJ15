@@ -51,7 +51,6 @@ export class Player extends Phaser.Group {
         this.game.physics.arcade.collide(this, this.ground, null, null, this);
         this.game.camera.x += this.speed;
 
-
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
             this.jump();
         }
