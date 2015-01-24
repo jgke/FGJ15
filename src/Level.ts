@@ -49,6 +49,7 @@ export class Level extends Phaser.State {
     update() {
         this.game.physics.arcade.overlap(this.player.bullets, this.monsters, (bullet, monster) => {
             monster.hit();
+            bullet.kill();
         });
         this.game.physics.arcade.overlap(this.player.bullets, this.chunks, (bullet) => {
             bullet.kill();
