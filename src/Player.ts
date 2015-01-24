@@ -12,6 +12,12 @@ export class Player extends Phaser.Group {
     xhist: Array<number>;
     yhist: Array<number>;
     histsize: number = 30;
+
+    score: number;
+    hp: number;
+    scoreui: Phaser.Text;
+    hpui: Phaser.Text;
+
     constructor(game: Phaser.Game, x: number, y: number, ground: Array<Chunk.Chunk>) {
         super(game);
 
@@ -20,6 +26,8 @@ export class Player extends Phaser.Group {
         this.currentShotCD = this.shotCD;
         this.bullets = new Phaser.Group(this.game);
         this.ground = ground;
+        this.score = 0;
+        this.hp = 100;
         this.xhist = [];
         this.yhist = [];
         for(var i = 0; i < this.histsize; i++) {
@@ -37,7 +45,23 @@ export class Player extends Phaser.Group {
             this.add(character);
         }
 
+        var bgui = new Phaser.Sprite(this.game, 0, 0, '1');
+        bgui.scale.x = this.game.width;
+        bgui.scale.y = 32;
+        bgui.tint = 0x000000;
+        this.add(bgui);
+        bgui.fixedToCamera = true;
+        this.game.add.existing(bgui);
 
+        var style = {align: "center", font: "24px Monospace", fill: "#f5f5f5"};
+
+        this.scoreui = new Phaser.Text(this.game, 4, 4, "Score " + this.score, style);
+        this.scoreui.fixedToCamera = true;
+        this.game.add.existing(this.scoreui);
+
+        this.hpui = new Phaser.Text(this.game, 204, 4, "Health " + this.hp, style);
+        this.hpui.fixedToCamera = true;
+        this.game.add.existing(this.hpui);
     }
 
     switchCharacter(n: number) {

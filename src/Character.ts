@@ -47,10 +47,10 @@ export class Character extends Phaser.Sprite {
                 texture = "douglas";
                 break;
             case 2:
-                texture = "place1";
+                texture = "steve";
                 break;
             case 3:
-                texture = "place2";
+                texture = "rebecca";
                 break;
         }
         this.loadTexture(texture, 0);
