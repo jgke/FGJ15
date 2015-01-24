@@ -10,6 +10,8 @@ export class Level extends Phaser.State {
     genpos: number;
     lastdelpos: number;
     bgm: Phaser.Sound;
+    cityimg: Phaser.TileSprite;
+    roadimg: Phaser.TileSprite;s
 
     create() {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -17,6 +19,14 @@ export class Level extends Phaser.State {
         this.game.world.setBounds(0, 0, 1000, 500);
         this.genpos = 0;
         this.chunks = [];
+        var bg = this.game.add.sprite(0, 0, 'sky720');
+        bg.fixedToCamera = true;
+        bg.scale.x = this.game.width / bg.width;
+        bg.scale.y = this.game.height / bg.height;
+        this.cityimg = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'city720');
+        this.cityimg.fixedToCamera = true;
+        this.roadimg = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'road720');
+        this.roadimg.fixedToCamera = true;
         this.monsters = new Phaser.Group(this.game);
         this.player = new Player.Player(this.game, 500, 100);
         this.player.ground = this.chunks;
@@ -54,6 +64,8 @@ export class Level extends Phaser.State {
     }
 
     update() {
+        this.cityimg.tilePosition.x -= 0.75;
+        this.roadimg.tilePosition.x -= 1.25;
         this.game.physics.arcade.overlap(this.player.bullets, this.monsters, (bullet, monster) => {
             monster.hit();
             bullet.kill();
