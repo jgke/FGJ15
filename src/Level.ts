@@ -38,14 +38,17 @@ export class Level extends Phaser.State {
         var muteKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
         muteKey.onDown.add(() => {this.bgm.isPlaying ? this.bgm.pause() : this.bgm.play()}, this);
 
-        for(var i = 0; i < 12; i++) {
+        for(var i = 0; i < 8; i++) {
+            this.addChunk(0);
+        }
+        for(var i = 0; i < 4; i++) {
             this.addChunk();
         }
         this.addMonster(0);
     }
 
-    addChunk() {
-        this.chunks.push(this.chunkFactory.newChunk());
+    addChunk(val=-1) {
+        this.chunks.push(this.chunkFactory.newChunk(val));
         this.genpos += this.chunks[this.chunks.length - 1].diffX;
         this.game.world.setBounds(0, 0, this.genpos * 64, this.game.height);
     }

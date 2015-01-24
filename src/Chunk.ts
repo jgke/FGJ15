@@ -63,8 +63,13 @@ export class ChunkFactory {
         this.game = game;
         this.offset = 0;
     }
-    newChunk() {
-        var chunk = new Chunk(this.game, Math.floor(Math.random() * chunks.length), this.offset);
+    newChunk(type=-1) {
+        var chunk;
+        if(type >= 0) {
+            chunk = new Chunk(this.game, type, this.offset);
+        } else {
+            chunk = new Chunk(this.game, Math.floor(Math.random() * chunks.length), this.offset);
+        }
         this.offset += chunk.diffX;
         return chunk;
     }
