@@ -26,6 +26,8 @@ export class Level extends Phaser.State {
         this.bgm = this.game.add.audio('bgm');
         this.bgm.loop = true;
         this.bgm.play();
+        var muteKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
+        muteKey.onDown.add(() => {this.bgm.isPlaying ? this.bgm.pause() : this.bgm.play()}, this);
 
         for(var i = 0; i < 12; i++) {
             this.addChunk();
