@@ -1,13 +1,28 @@
 import Chunk = require("./Chunk");
 
 export class Monster extends Phaser.Sprite {
-    type: number;
     ground: Array<Chunk.Chunk>;
     hp: number;
     maxhp: number = 2;
     constructor(game: Phaser.Game, x: number, y: number, type: number) {
         super(game, x, y, "place4");
-        this.type = type;
+        switch(type) {
+            case 1:
+                this.tint = 0xff0000;
+                break;
+            case 2:
+                this.tint = 0x00ff00;
+                break;
+            case 3:
+                this.tint = 0x0000ff;
+                break;
+            case 4:
+                this.tint = 0xff00ff;
+                break;
+            default:
+                this.tint = 0x777777;
+                break;
+        }
         this.hp = this.maxhp;
         game.add.existing(this);
         game.physics.arcade.enable(this);

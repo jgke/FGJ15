@@ -54,7 +54,6 @@ export class Level extends Phaser.State {
     }
 
     removeChunk() {
-        console.log("--");
         var chunk = this.chunks.shift();
         chunk.destroy();
     }
@@ -81,7 +80,7 @@ export class Level extends Phaser.State {
             this.removeChunk();
             this.addChunk();
             this.lastdelpos += 64*this.chunks[0].diffX;
-            this.addMonster(0);
+            this.addMonster(Math.floor(Math.random() * 5));
         }
     }
 }

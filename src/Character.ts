@@ -5,7 +5,7 @@ export class Character extends Phaser.Sprite {
     ground: Array<Chunk.Chunk>;
     lastTouch: number;
     speed: number;
-    type: number;
+    playerType: number;
     jumps: Array<number>;
     jumping: number = 0;
     emitter: Phaser.Particles.Arcade.Emitter;
@@ -13,7 +13,6 @@ export class Character extends Phaser.Sprite {
     public constructor(game: Phaser.Game, x: number, y: number, type: number, ground: Array<Chunk.Chunk>) {
         super(game, x, y, "place1");
         this.setType(type);
-        this.type = type;
         this.anchor = new Phaser.Point(0.5, 0.5);
         game.add.existing(this);
         if(type == 3) {
@@ -38,7 +37,7 @@ export class Character extends Phaser.Sprite {
     }
 
     setType(x: number) {
-        this.type = x;
+        this.playerType = x;
         var texture = "";
         switch(x) {
             case 0:
@@ -78,7 +77,7 @@ export class Character extends Phaser.Sprite {
 
     update() {
         super.update();
-        if((<Level.Level>this.game.state.getCurrentState()).player.current.type == this.type) {
+        if((<Level.Level>this.game.state.getCurrentState()).player.current.playerType == this.playerType) {
             this.body.acceleration.x += this.speed * 8;
             this.game.physics.arcade.collide(this, this.ground, null, null, this);
         }
