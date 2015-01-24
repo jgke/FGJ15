@@ -26,7 +26,7 @@ export class Player extends Phaser.Sprite {
 
     shoot() {
         this.currentShotCD = this.shotCD;
-        var bullet = new Bullet.Bullet(this.game, this.position.x, this.position.y);
+        var bullet = new Bullet.Bullet(this.game, this.position.x, this.position.y, true);
         this.bullets.add(bullet);
     }
 
