@@ -2,43 +2,30 @@ import GroundTile = require("./GroundTile");
 
 var chunks = [
     [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
+        [1, 1, 1, 1],
         [1, 1, 1, 1],
     ],
     [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
         [0, 1, 1, 0],
         [1, 1, 1, 1],
         [1, 1, 1, 1],
+        [1, 1, 1, 1],
     ],
     [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
         [0, 0, 1, 0],
         [0, 1, 1, 1],
         [1, 1, 1, 1],
+        [1, 1, 1, 1],
     ],
     [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
         [1, 1, 0, 0],
         [1, 1, 1, 1],
+        [1, 1, 1, 1],
     ],
     [
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
-        [0, 0, 0, 0],
         [1, 1, 1, 1],
-        [1, 1, 1, 1],
+        [0, 1, 0, 0],
+        [0, 0, 0, 0],
         [1, 1, 1, 1],
     ],
 ];
@@ -50,11 +37,12 @@ var chunks = [
 
 export class Chunk extends Phaser.Group {
     diffX: number;
-    diffY: number = 6;
+    diffY: number;
     constructor(game: Phaser.Game, id: number, offset: number) {
         super(game);
         var data = chunks[id];
         this.diffX = data[0].length;
+        this.diffY = data.length;
         for(var y = 0; y < data.length; y++) {
             for(var x = 0; x < data[y].length; x++) {
                 switch(data[y][x]) {
