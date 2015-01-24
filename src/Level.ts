@@ -61,10 +61,10 @@ export class Level extends Phaser.State {
         });
 
         var ppos = this.camera.x;
-        if(ppos - this.lastdelpos > 64 * 4) {
+        if(ppos - this.lastdelpos > 64 * this.chunks[0].diffX) {
             this.removeChunk();
             this.addChunk();
-            this.lastdelpos += 64*4;
+            this.lastdelpos += 64*this.chunks[0].diffX;
             this.addMonster(0);
         }
     }
