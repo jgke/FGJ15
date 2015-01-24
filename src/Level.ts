@@ -24,7 +24,7 @@ export class Level extends Phaser.State {
 
     addChunk() {
         this.chunks.push(new Chunk.Chunk(this.game, this.genpos));
-        this.genpos += this.chunks[this.chunks.length - 1].length;
+        this.genpos += this.chunks[this.chunks.length - 1].diff;
         this.game.world.setBounds(0, 0, this.genpos * 64, 64 * 6);
     }
 
