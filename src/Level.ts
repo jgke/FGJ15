@@ -11,7 +11,8 @@ export class Level extends Phaser.State {
     lastdelpos: number;
     bgm: Phaser.Sound;
     cityimg: Phaser.TileSprite;
-    roadimg: Phaser.TileSprite;s
+    roadimg: Phaser.TileSprite;
+    blind: Phaser.Sprite;
 
     create() {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -29,6 +30,9 @@ export class Level extends Phaser.State {
         this.roadimg.fixedToCamera = true;
         this.monsters = new Phaser.Group(this.game);
         this.player = new Player.Player(this.game, 900, 100, this.chunks);
+        this.player.onDestroy.add(() => {
+            this.lose();
+        }, this);
         this.lastdelpos = 400;
         this.chunkFactory = new Chunk.ChunkFactory(this.game);
         this.game.sound.stopAll();
@@ -45,6 +49,15 @@ export class Level extends Phaser.State {
             this.addChunk();
         }
         this.addMonster(0);
+
+        this.blind = this.game.add.sprite(0, 0, '1');
+        this.blind.tint = 0xf8f8f8;
+        this.blind.scale.x = this.game.width;
+        this.blind.scale.y = this.game.height;
+        this.blind.fixedToCamera = true;
+        this.game.add.tween(this.blind).to({alpha: 0}, 1000).start().onComplete.addOnce(() => {
+            this.blind.visible = false;
+        }, this);
     }
 
     addChunk(val=-1) {
@@ -62,6 +75,14 @@ export class Level extends Phaser.State {
         var monster = new Monster.Monster(this.game, this.lastdelpos + this.game.width + 200, 100, type);
         monster.ground = this.chunks;
         this.monsters.add(monster);
+    }
+
+    lose() {
+        this.blind.visible = true;
+        this.blind.bringToTop();
+        this.game.add.tween(this.blind).to({alpha: 1}, 1000).start().onComplete.addOnce(() => {
+            this.game.state.start('GameOver');
+        }, this);
     }
 
     update() {

@@ -1,10 +1,13 @@
 export class Preloader extends Phaser.State {
     preloadBar: Phaser.Sprite;
     preload() {
-        this.preloadBar = this.add.sprite(this.game.width/2, this.game.height/2, 'preloadBar');
-        this.preloadBar.scale.x = this.game.width/this.preloadBar.width;
+        this.preloadBar = this.add.sprite(0, 8, '1');
+        this.preloadBar.scale.x = this.game.width * 2;
+        this.preloadBar.scale.y = 16;
+        this.preloadBar.tint = 0x333333;
         this.preloadBar.anchor = new Phaser.Point(0.5, 0.5);
         this.load.setPreloadSprite(this.preloadBar);
+        this.stage.backgroundColor = "#f8f8f8";
 
         var images = {
             "place1": "assets/place1.png",
@@ -58,8 +61,8 @@ export class Preloader extends Phaser.State {
     }
 
     create() {
-        var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 1000, Phaser.Easing.Linear.None, true);
-        tween.onComplete.add(() => {this.game.state.start('Level', true, false)}, this);
+        var tween = this.add.tween(this.preloadBar).to({ alpha: 0 }, 500, Phaser.Easing.Linear.None, true);
+        tween.onComplete.add(() => {this.game.state.start('MainMenu', true, false)}, this);
     }
 
 }

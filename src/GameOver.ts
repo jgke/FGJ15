@@ -5,14 +5,18 @@ export class GameOver extends Phaser.State {
                                    this.game.height/2,
                                    "Game Over!\nSpace to restart.",
                                    {
-                                       fill: "#f5f5f5",
-                                       font: "64px Monospace",
+                                       fill: "#333",
+                                       font: "bold 70px Arial",
                                        align: "center"
                                    });
         text.anchor.set(0.5, 0.5);
+        text.alpha = 0;
         this.game.add.existing(text);
         this.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR).onDown.add(() => {
-            this.game.state.start('Level');
+            this.game.add.tween(text).to({alpha: 0}, 500).start().onComplete.addOnce(() => {
+                this.game.state.start('Level');
+            });
         }, this);
+        this.game.add.tween(text).to({alpha: 1}, 500).start();
     }
 }

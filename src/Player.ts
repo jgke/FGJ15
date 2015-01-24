@@ -19,6 +19,7 @@ export class Player extends Phaser.Group {
     scoreui: Phaser.Text;
     hpui: Phaser.Text;
 
+
     constructor(game: Phaser.Game, x: number, y: number, ground: Array<Chunk.Chunk>) {
         super(game);
 
@@ -51,18 +52,20 @@ export class Player extends Phaser.Group {
         var bgui = new Phaser.Sprite(this.game, 0, 0, '1');
         bgui.scale.x = this.game.width;
         bgui.scale.y = 32;
-        bgui.tint = 0x000000;
+        bgui.tint = 0xf8f8f8;
         this.add(bgui);
         bgui.fixedToCamera = true;
         this.game.add.existing(bgui);
 
-        var style = {align: "center", font: "24px Monospace", fill: "#f5f5f5"};
+        var style = {align: "center", font: "bold 24px Arial", fill: "#333"};
 
-        this.scoreui = new Phaser.Text(this.game, 4, 4, "Score: " + this.score, style);
+        this.scoreui = new Phaser.Text(this.game, 100, 20, "Score: " + this.score, style);
+        this.scoreui.anchor.set(0.5, 0.5);
         this.scoreui.fixedToCamera = true;
         this.game.add.existing(this.scoreui);
 
-        this.hpui = new Phaser.Text(this.game, 204, 4, "HP: " + this.hp, style);
+        this.hpui = new Phaser.Text(this.game, 300, 20, "HP: " + this.hp, style);
+        this.hpui.anchor.set(0.5, 0.5);
         this.hpui.fixedToCamera = true;
         this.game.add.existing(this.hpui);
     }
@@ -70,11 +73,16 @@ export class Player extends Phaser.Group {
     addScore(n: number) {
         this.score += n;
         this.scoreui.setText("Score: " + this.score);
+        this.game.add.tween(this.scoreui.scale).to({x: 1.25, y: 1.25}, 100).chain(this.game.add.tween(this.scoreui.scale).to({x: 1, y: 1}, 100)).start();
     }
 
     removeHP(n: number) {
         this.hp -= n;
         this.hpui.setText("HP: " + this.hp);
+        this.game.add.tween(this.hpui.scale).to({x: 1.25, y: 1.25}, 100).chain(this.game.add.tween(this.hpui.scale).to({x: 1, y: 1}, 100)).start();
+        if(this.hp <= 0) {
+            this.destroy();
+        }
     }
 
     switchCharacter(n: number) {
@@ -150,12 +158,11 @@ export class Player extends Phaser.Group {
             }
         }
         if(relX < -64) {
-            this.game.state.start('GameOver');
             this.destroy();
             return;
-        } else if(relX < 200) {
+        } else if(relX < 350) {
             this.setVel(this.speed * 70);
-        } else if(relX > 300) {
+        } else if(relX > 450) {
             this.setVel(this.speed * 50);
         } else {
             this.setVel(this.speed * 60);
