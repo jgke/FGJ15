@@ -108,6 +108,7 @@ export class Player extends Phaser.Group {
         if(relX < -64) {
             this.game.state.start('GameOver');
             this.destroy();
+            return;
         } else if(relX < 200) {
             this.setVel(this.speed * 70);
         } else if(relX > 300) {
