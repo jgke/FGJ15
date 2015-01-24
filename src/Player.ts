@@ -11,7 +11,8 @@ export class Player extends Phaser.Group {
     ground: Array<Chunk.Chunk>;
     xhist: Array<number>;
     yhist: Array<number>;
-    histsize: number = 30;
+    grounded: Array<boolean>;
+    histsize: number = 31;
 
     score: number;
     hp: number;
@@ -30,9 +31,11 @@ export class Player extends Phaser.Group {
         this.hp = 100;
         this.xhist = [];
         this.yhist = [];
+        this.grounded = [];
         for(var i = 0; i < this.histsize; i++) {
             this.xhist.push(0);
             this.yhist.push(0);
+            this.grounded.push(false);
         }
 
         for(var i = 0; i < 4; i++) {
@@ -121,14 +124,21 @@ export class Player extends Phaser.Group {
         var relX = this.current.position.x - this.game.camera.x;
         this.xhist.shift();
         this.yhist.shift();
+        this.grounded.shift();
         this.xhist.push(this.current.position.x);
         this.yhist.push(this.current.position.y);
+        this.grounded.push(this.current.jumpable());
         var modifier = 0;
         for(var i = 0; i < 3; i++) {
             this.children[i].position.x = this.xhist[i*10];
             this.children[i].position.y = this.yhist[i*10];
         }
-
+        for(var i = 0; i < 4; i++) {
+            var child = <Character.Character>this.children[i];
+            if(this.grounded[i * 10]) {
+                (<Character.Character>child).emitter.start(true, 400, null, 1);
+            }
+        }
         if(relX < -64) {
             this.game.state.start('GameOver');
             this.destroy();

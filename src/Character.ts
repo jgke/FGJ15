@@ -32,7 +32,7 @@ export class Character extends Phaser.Sprite {
         this.emitter.angle = 100;
         this.emitter.frequency = 1000;
         this.emitter.enableBody = true;
-        this.emitter.start(false, 400, 20);
+        this.emitter.start(true, 400, 20);
         this.addChild(this.emitter);
     }
 
