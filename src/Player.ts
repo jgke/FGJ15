@@ -18,16 +18,33 @@ export class Player extends Phaser.Group {
         this.bullets = new Phaser.Group(this.game);
         this.ground = ground;
 
-        var asd = ["eugene", "douglas", "place4", "place4"];
         for(var i = 0; i < 4; i++) {
 
-            var character = new Character.Character(game, 500 + 64 * i, y, asd[i], i, ground);
+            var character = new Character.Character(game, 500 + 64 * i, y, i, ground);
             character.speed = this.speed;
             if(i == 3) {
                 this.current = character;
             }
             this.add(character);
         }
+
+
+    }
+
+    switchCharacter(n: number) {
+        var op, np, nt;
+        for(var i = 0; i < this.children.length; i++) {
+            var c = <Character.Character>this.children[i];
+            if(c.type == n) {
+                np = i;
+                nt = c.type;
+            }
+            if(c.type == this.current.type) {
+                op = i;
+            }
+        }
+        (<Character.Character>this.children[np]).setType(this.current.type);
+        this.current.setType(nt);
     }
 
     shoot() {
@@ -37,8 +54,14 @@ export class Player extends Phaser.Group {
     }
 
     jump() {
-        for(var thing in this.children) {
+        /*for(var thing in this.children) {
             (<Character.Character>this.children[thing]).jump();
+        }*/
+        if(this.current.jumpable()) {
+            console.log("l");
+            for (var thing in this.children) {
+                (<Character.Character>this.children[thing]).newjump(this.current.position.x);
+            }
         }
     }
 
@@ -55,6 +78,19 @@ export class Player extends Phaser.Group {
 
         if(this.game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)) {
             this.jump();
+        }
+
+        if(this.game.input.keyboard.isDown(Phaser.Keyboard.Q)) {
+            this.switchCharacter(0);
+        }
+        if(this.game.input.keyboard.isDown(Phaser.Keyboard.W)) {
+            this.switchCharacter(1);
+        }
+        if(this.game.input.keyboard.isDown(Phaser.Keyboard.O)) {
+            this.switchCharacter(2);
+        }
+        if(this.game.input.keyboard.isDown(Phaser.Keyboard.P)) {
+            this.switchCharacter(3);
         }
 
         var relX = this.current.position.x - this.game.camera.x;
