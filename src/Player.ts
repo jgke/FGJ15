@@ -44,15 +44,15 @@ export class Player extends Phaser.Group {
         var op, np, nt;
         for(var i = 0; i < this.children.length; i++) {
             var c = <Character.Character>this.children[i];
-            if(c.type == n) {
+            if(c.playerType == n) {
                 np = i;
-                nt = c.type;
+                nt = c.playerType;
             }
-            if(c.type == this.current.type) {
+            if(c.playerType == this.current.playerType) {
                 op = i;
             }
         }
-        (<Character.Character>this.children[np]).setType(this.current.type);
+        (<Character.Character>this.children[np]).setType(this.current.playerType);
         this.current.setType(nt);
     }
 
