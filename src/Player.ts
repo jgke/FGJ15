@@ -58,13 +58,23 @@ export class Player extends Phaser.Group {
 
         var style = {align: "center", font: "24px Monospace", fill: "#f5f5f5"};
 
-        this.scoreui = new Phaser.Text(this.game, 4, 4, "Score " + this.score, style);
+        this.scoreui = new Phaser.Text(this.game, 4, 4, "Score: " + this.score, style);
         this.scoreui.fixedToCamera = true;
         this.game.add.existing(this.scoreui);
 
-        this.hpui = new Phaser.Text(this.game, 204, 4, "Health " + this.hp, style);
+        this.hpui = new Phaser.Text(this.game, 204, 4, "HP: " + this.hp, style);
         this.hpui.fixedToCamera = true;
         this.game.add.existing(this.hpui);
+    }
+
+    addScore(n: number) {
+        this.score += n;
+        this.scoreui.setText("Score: " + this.score);
+    }
+
+    removeHealth(n: number) {
+        this.hp -= n;
+        this.hpui.setText("HP: " + this.hp);
     }
 
     switchCharacter(n: number) {
