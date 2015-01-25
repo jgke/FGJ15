@@ -32,7 +32,8 @@ export class Preloader extends Phaser.State {
             "enm3": "assets/empty_cigarette_pack_enemy.png",
             "enm4": "assets/sun_enemy.png",
             "enm5": "assets/place1.png",
-            "enm667": "assets/boss.png"
+            "enm667": "assets/boss.png",
+            "enm667s": "assets/boss_shoot_face.png"
         };
 
         var audios = {

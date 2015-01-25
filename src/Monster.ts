@@ -11,6 +11,7 @@ export class Monster extends Phaser.Sprite {
     bossbullets: Phaser.Group;
     currentShotCD: number = 0;
     shotCD: number = 15;
+    asd: boolean;
     constructor(game: Phaser.Game, x: number, y: number, type: number) {
         super(game, x, y, "enm" + (type + 1));
         this.monsterType = type;
@@ -25,6 +26,7 @@ export class Monster extends Phaser.Sprite {
 
         this.body.drag.setTo(600, 0);
         this.body.maxVelocity.setTo(400, 5000);
+        this.asd = false;
     }
 
     update() {
@@ -35,6 +37,13 @@ export class Monster extends Phaser.Sprite {
                 this.body.y = this.game.height - 64*7 - Math.sin(this.game.time.time/1000) * 128;
                 this.body.x = this.game.camera.x + (this.game.width - 256);
                 this.currentShotCD--;
+                if(this.currentShotCD <= 5 && this.asd == false) {
+                    this.loadTexture('enm667s', 0);
+                    this.asd = true;
+                } else if(this.currentShotCD > 5 && this.asd == true) {
+                    this.loadTexture('enm667', 0);
+                    this.asd = false;
+                }
                 if(this.currentShotCD <= 0) {
                     var bullet = new Bullet.Bullet(this.game, this.position.x, this.position.y, null, null, false);
                     this.bossbullets.add(bullet);
