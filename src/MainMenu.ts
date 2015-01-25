@@ -46,6 +46,11 @@ export class MainMenu extends Phaser.State {
 
         this.addTransition(Phaser.Keyboard.SPACEBAR, 'Level');
         this.addTransition(Phaser.Keyboard.Q, 'Help');
+
+        this.game.sound.stopAll();
+        var bgm = this.game.add.audio('menu');
+        bgm.loop = true;
+        bgm.play();
     }
 
     addTransition(key: number, level: string) {
