@@ -46,7 +46,7 @@ export class Monster extends Phaser.Sprite {
         switch(this.monsterType) {
             case 666:
                 this.body.allowGravity = false;
-                this.body.y = 128 + Math.sin(this.game.time.time/1000) * 128;
+                this.body.y = this.game.height - 64*7 - Math.sin(this.game.time.time/1000) * 128;
                 this.body.x = this.game.camera.x + (this.game.width - 256);
                 break;
             default:
