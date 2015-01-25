@@ -72,8 +72,8 @@ export class PlayerInfo extends Phaser.Group {
             return;
         }
         for(var i = 0; i < 4; i++) {
-            amo += this.specializations[i] / 100;
-            this.specializations[i] *= 0.99;
+            amo += this.specializations[i] / 10;
+            this.specializations[i] *= 0.9;
         }
         this.specializations[n] += amo;
         this.updatebars();

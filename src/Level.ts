@@ -44,7 +44,7 @@ export class Level extends Phaser.State {
         var muteKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
         muteKey.onDown.add(() => {this.bgm.isPlaying ? this.bgm.pause() : this.bgm.play()}, this);
 
-        for(var i = 0; i < 8; i++) {
+        for(var i = 0; i < 4; i++) {
             this.addChunk(0);
         }
         for(var i = 0; i < 4; i++) {
@@ -110,9 +110,9 @@ export class Level extends Phaser.State {
             if (Math.random() > 0.5) {
                 this.monsterType = Math.floor(Math.random() * 5);
             }
-            if(this.nextMonster)
-                this.addMonster(this.monsterType)
-            this.nextMonster = !this.nextMonster;
+            //if(this.nextMonster)
+            this.addMonster(this.monsterType)
+            //this.nextMonster = !this.nextMonster;
         }
     }
 }

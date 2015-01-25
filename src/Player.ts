@@ -99,7 +99,7 @@ export class Player extends Phaser.Group {
         this.completionbg.tint = 0x333333;
         this.game.add.existing(this.completionbg);
 
-        for(var i = 0; i < 4; i++) {
+        for(var i = 0; i < 5; i++) {
             this.completion[i] = 0;
             var bar = new Phaser.Sprite(this.game, 4, this.game.height - 28, '1');
             switch(i) {
@@ -114,6 +114,9 @@ export class Player extends Phaser.Group {
                     break;
                 case 3:
                     bar.tint = 0xffff00;
+                    break;
+                case 4:
+                    bar.tint = 0x777777;
                     break;
             }
             bar.scale.y = 32 - 8;
@@ -152,18 +155,20 @@ export class Player extends Phaser.Group {
         this.scoreui.setText("Score: " + this.score);
         this.game.add.tween(this.scoreui.scale).to({x: 1.25, y: 1.25}, 100).chain(this.game.add.tween(this.scoreui.scale).to({x: 1, y: 1}, 100)).start();
         this.completion[n]++;
+
         var pos = 0;
         var mul = 10;
-        for(var i = 0; i < 4; i++) {
+        for(var i = 0; i < 5; i++) {
             var c = this.completion[i];
             var b = this.completionui[i];
             if(c > 0) {
                 b.visible = true;
-                b.x = 4 + pos * mul;
+                b.position.x = 4 + pos * mul;
                 b.scale.x = c * mul;
                 pos += c;
             }
         }
+
         this.infos[this.current.playerType].addTo(n);
     }
 

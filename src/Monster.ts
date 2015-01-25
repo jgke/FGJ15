@@ -5,7 +5,7 @@ import Player = require("./Player");
 export class Monster extends Phaser.Sprite {
     ground: Array<Chunk.Chunk>;
     hp: number;
-    maxhp: number = 1;
+    maxhp: number = 0.5;
     monsterType: number;
     constructor(game: Phaser.Game, x: number, y: number, type: number) {
         super(game, x, y, "1");
