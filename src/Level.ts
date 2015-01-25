@@ -13,6 +13,7 @@ export class Level extends Phaser.State {
     cityimg: Phaser.TileSprite;
     roadimg: Phaser.TileSprite;
     blind: Phaser.Sprite;
+    monsterType: number;
 
     create() {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -49,6 +50,7 @@ export class Level extends Phaser.State {
             this.addChunk();
         }
         this.addMonster(0);
+        this.monsterType = 0;
 
         this.blind = this.game.add.sprite(0, 0, '1');
         this.blind.tint = 0xf8f8f8;
@@ -106,8 +108,9 @@ export class Level extends Phaser.State {
             this.addChunk();
             this.lastdelpos += 64 * this.chunks[0].diffX;
             if (Math.random() > 0.5) {
-                this.addMonster(Math.floor(Math.random() * 5));
+                this.monsterType = Math.floor(Math.random() * 5);
             }
+            this.addMonster(this.monsterType)
         }
     }
 }
