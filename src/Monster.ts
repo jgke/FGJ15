@@ -26,6 +26,9 @@ export class Monster extends Phaser.Sprite {
             case 3:
                 this.tint = 0xffff00;
                 break;
+            case 666:
+                this.tint = 0xffffff;
+                break;
             default:
                 this.tint = 0x777777;
                 break;
@@ -55,7 +58,7 @@ export class Monster extends Phaser.Sprite {
         } else {
             this.hp -= dmgs[this.monsterType];
         }
-        this.game.add.tween(this.scale).to({ x: Math.random() * 0.75 + 0.5, y: Math.random() * 0.75 + 0.5 }, 100).chain(this.game.add.tween(this.scale).to({x:1, y:1})).start();
+        this.game.add.tween(this.scale).to({ x: Math.random() * 48 + 32, y: Math.random() * 48 + 32 }, 100).chain(this.game.add.tween(this.scale).to({x:64, y:64})).start();
         if(this.hp <= 0) {
             this.destroy();
             return true;
