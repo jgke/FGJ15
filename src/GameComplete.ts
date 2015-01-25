@@ -18,5 +18,8 @@ export class GameComplete extends Phaser.State {
             });
         }, this);
         this.game.add.tween(text).to({alpha: 1}, 500).start();
+        var bgm = this.game.add.audio('heavythemeending');
+        bgm.loop = false;
+        bgm.play();
     }
 }

@@ -177,7 +177,6 @@ export class Player extends Phaser.Group {
             this.infos[this.current.playerType].addTo(n);
 
         } else {
-            console.log(this.completion);
             if(this.completion[4] > 0) {
                 this.completion[4]--;
             } else if(this.completion[m] > 0) {

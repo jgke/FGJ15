@@ -17,8 +17,10 @@ export class Level extends Phaser.State {
     nextMonster: boolean = false;
     boss: Monster.Monster = null;
     generateMonsters: boolean = true;
+    won: boolean = false;
 
     create() {
+        this.won = false;
         this.generateMonsters = true;
         this.boss = null;
         this.nextMonster = false;
@@ -90,6 +92,8 @@ export class Level extends Phaser.State {
             this.bgm.fadeIn();
             this.boss = monster;
             this.boss.events.onKilled.addOnce(() => {
+                this.won = true;
+                this.game.sound.stopAll();
                 this.game.state.start('GameComplete');
             }, this);
         }
@@ -101,6 +105,9 @@ export class Level extends Phaser.State {
     }
 
     lose() {
+        if(this.won) {
+            return;
+        }
         this.blind.visible = true;
         this.blind.bringToTop();
         this.game.add.tween(this.blind).to({alpha: 1}, 1000).start().onComplete.addOnce(() => {
