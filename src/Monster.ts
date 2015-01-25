@@ -5,9 +5,12 @@ import Player = require("./Player");
 export class Monster extends Phaser.Sprite {
     ground: Array<Chunk.Chunk>;
     hp: number;
-    maxhp: number = 2;
+    maxhp: number = 4;
+    monsterType: number;
     constructor(game: Phaser.Game, x: number, y: number, type: number) {
         super(game, x, y, "place4");
+        this.monsterType = type;
+        this.anchor.set(0.5, 0.5);
         switch(type) {
             case 1:
                 this.tint = 0xff0000;
@@ -38,15 +41,15 @@ export class Monster extends Phaser.Sprite {
         if(this.body.onFloor() || this.body.touching.down) {
             this.body.velocity.y -= 800;
         }
-        if(this.game.camera.x > this.position.x + 64) {
+        if(this.game.camera.x > this.position.x + 32) {
             (<Player.Player>(<Level.Level>this.game.state.getCurrentState()).player).removeHP(10);
             this.destroy();
         }
     }
 
-    hit():boolean {
-        this.hp--;
-        var tween = this.game.add.tween(this).to({ alpha: (this.hp/this.maxhp) }, 100, Phaser.Easing.Linear.None, true);
+    hit(bulletType: number):boolean {
+        this.hp -= (this.monsterType == bulletType ? 2 : 1);
+        this.game.add.tween(this.scale).to({ x: Math.random() * 0.75 + 0.5, y: Math.random() * 0.75 + 0.5 }, 100).chain(this.game.add.tween(this.scale).to({x:1, y:1})).start();
         if(this.hp <= 0) {
             this.destroy();
             return true;
