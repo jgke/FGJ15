@@ -156,6 +156,11 @@ export class Player extends Phaser.Group {
             if(this.grounded[i * 10]) {
                 (<Character.Character>child).emitter.start(true, 400, null, 1);
             }
+            /*
+            else if(this.grounded[i*10 - 1]) {
+                this.game.add.sound("jump").play();
+            }
+            */
         }
         if(relX < -64) {
             this.destroy();
@@ -171,6 +176,7 @@ export class Player extends Phaser.Group {
         this.currentShotCD--;
         if(this.currentShotCD <= 0) {
             this.shoot();
+            this.game.add.sound("gun3", 0.1).play();
         }
     }
 }
