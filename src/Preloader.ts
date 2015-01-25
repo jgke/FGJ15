@@ -31,7 +31,7 @@ export class Preloader extends Phaser.State {
             "enm2": "assets/hourglass_enemy.png",
             "enm3": "assets/empty_cigarette_pack_enemy.png",
             "enm4": "assets/sun_enemy.png",
-            "enm5": "assets/place1.png",
+            "enm5": "assets/generic_enemy.png",
             "enm667": "assets/boss.png",
             "enm667s": "assets/boss_shoot_face.png"
         };
@@ -64,6 +64,8 @@ export class Preloader extends Phaser.State {
         for(var k in audios) {
             this.load.audio(k, audios[k]);
         }
+
+        //this.load.spritesheet("plr2_run", "assets/eugene_run.png", 61, 58, 12);
 
     }
 
