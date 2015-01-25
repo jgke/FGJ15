@@ -39,13 +39,13 @@ export class Character extends Phaser.Sprite {
     setType(x: number) {
         this.playerType = x;
         var texture = "plr" + (x+1);
-        /*if(x == 1) {
+        if(x == 3) {
             texture += "_run";
-        }*/
+        }
         this.loadTexture(texture, 0);
-        /*if(x == 1) {
+        if(x == 3) {
             this.animations.add('walk').play(10, true);
-        }*/
+        }
     }
 
     jumpable():boolean {

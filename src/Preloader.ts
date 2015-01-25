@@ -66,6 +66,7 @@ export class Preloader extends Phaser.State {
         }
 
         //this.load.spritesheet("plr2_run", "assets/eugene_run.png", 61, 58, 12);
+        this.load.spritesheet("plr4_run", "assets/rebecca_run.png", 64, 64, 12);
 
     }
 
