@@ -37,8 +37,8 @@ export class Preloader extends Phaser.State {
         };
 
         var audios = {
-            "bgm": "assets/mix3FGJ2015.ogg",
-            "chord": "assets/chord.ogg",
+            "plr1_music": "assets/mix3FGJ2015.ogg",
+            "plr2_music": "assets/chord.ogg",
             "bossfight": "assets/bossfight.ogg",
             "cashregister": "assets/cashregister.ogg",
             "doorbell": "assets/doorbell.ogg",
@@ -47,11 +47,11 @@ export class Preloader extends Phaser.State {
             "gun1": "assets/gun1.ogg",
             "gun2": "assets/gun2.ogg",
             "gun3": "assets/gun3.ogg",
-            "heavytheme": "assets/heavytheme.ogg",
+            "plr3_music": "assets/heavytheme.ogg",
             "heavythemeending": "assets/heavythemeending.ogg",
             "jump": "assets/jump.ogg",
             "menu": "assets/menu.ogg",
-            "8bit": "assets/mixFGJ2015_8bit.ogg",
+            "plr4_music": "assets/mixFGJ2015_8bit.ogg",
             "pausemenu": "assets/pausemenu.ogg",
             "punch": "assets/punch.ogg",
             "sunpop": "assets/sunpop.ogg"

@@ -171,7 +171,7 @@ export class Player extends Phaser.Group {
                 }
             }
 
-            if (pos == 5) {
+            if (pos == 100) {
                 (<Level.Level>this.game.state.getCurrentState()).b0ss();
             }
             this.infos[this.current.playerType].addTo(n);
@@ -230,6 +230,7 @@ export class Player extends Phaser.Group {
         }
         this.infos[nt].select();
         this.current.setType(nt);
+        (<Level.Level>this.game.state.getCurrentState()).bgmselect(n);
     }
 
     shoot() {

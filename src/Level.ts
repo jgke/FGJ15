@@ -9,7 +9,7 @@ export class Level extends Phaser.State {
     monsters: Phaser.Group;
     genpos: number;
     lastdelpos: number;
-    bgm: Phaser.Sound;
+    bgm: Phaser.Sound = null;
     cityimg: Phaser.TileSprite;
     roadimg: Phaser.TileSprite;
     blind: Phaser.Sprite;
@@ -18,6 +18,7 @@ export class Level extends Phaser.State {
     boss: Monster.Monster = null;
     generateMonsters: boolean = true;
     won: boolean = false;
+    bgms: any = [];
 
     create() {
         this.won = false;
@@ -45,9 +46,13 @@ export class Level extends Phaser.State {
         this.lastdelpos = 400;
         this.chunkFactory = new Chunk.ChunkFactory(this.game);
         this.game.sound.stopAll();
-        this.bgm = this.game.add.audio('bgm');
-        this.bgm.loop = true;
-        this.bgm.play();
+        for(var i = 0; i < 4; i++) {
+            this.bgms.push(this.game.sound.add('plr' + (i+1) + '_music', 0));
+            this.bgms[i].loop = true;
+            this.bgms[i].play();
+        }
+        this.bgm = this.bgms[0];
+        this.bgmselect(0);
         var muteKey = this.game.input.keyboard.addKey(Phaser.Keyboard.M);
         muteKey.onDown.add(() => {this.bgm.isPlaying ? this.bgm.pause() : this.bgm.play()}, this);
 
@@ -88,7 +93,6 @@ export class Level extends Phaser.State {
         if(type == 666) {
             this.bgm.fadeOut();
             this.bgm = this.game.add.audio('bossfight');
-            this.bgm.loop = true;
             this.bgm.fadeIn();
             this.boss = monster;
             this.boss.events.onKilled.addOnce(() => {
@@ -97,6 +101,15 @@ export class Level extends Phaser.State {
                 this.game.state.start('GameComplete');
             }, this);
         }
+    }
+
+    bgmselect(name: number) {
+        if(this.boss != null) {
+            return;
+        }
+        this.bgm.volume = 0;
+        this.bgm = this.bgms[name];
+        this.bgm.volume = 1;
     }
 
     b0ss() {
