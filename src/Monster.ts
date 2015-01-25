@@ -12,16 +12,16 @@ export class Monster extends Phaser.Sprite {
         this.monsterType = type;
         this.anchor.set(0.5, 0.5);
         switch(type) {
-            case 1:
+            case 0:
                 this.tint = 0xff0000;
                 break;
-            case 2:
+            case 1:
                 this.tint = 0x00ff00;
                 break;
-            case 3:
+            case 2:
                 this.tint = 0x0000ff;
                 break;
-            case 4:
+            case 3:
                 this.tint = 0xff00ff;
                 break;
             default:
@@ -48,7 +48,7 @@ export class Monster extends Phaser.Sprite {
     }
 
     hit(bulletType: number):boolean {
-        this.hp -= (this.monsterType == bulletType ? 2 : 1);
+        this.hp -= (this.monsterType == 4 || this.monsterType == bulletType ? 2 : 1);
         this.game.add.tween(this.scale).to({ x: Math.random() * 0.75 + 0.5, y: Math.random() * 0.75 + 0.5 }, 100).chain(this.game.add.tween(this.scale).to({x:1, y:1})).start();
         if(this.hp <= 0) {
             this.destroy();
