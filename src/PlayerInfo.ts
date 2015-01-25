@@ -46,16 +46,16 @@ export class PlayerInfo extends Phaser.Group {
         }
         switch(type) {
             case 0:
-                this.name = "asd4";
+                this.name = "Designer";
                 break;
             case 1:
-                this.name = "asd3";
+                this.name = "Artist";
                 break;
             case 2:
-                this.name = "asd2";
+                this.name = "Musician";
                 break;
             case 3:
-                this.name = "asd1";
+                this.name = "Coder";
                 break;
         }
         this.namerender = new Phaser.Text(this.game, this.x, this.y, this.name, {

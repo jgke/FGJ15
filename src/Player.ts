@@ -29,6 +29,8 @@ export class Player extends Phaser.Group {
     completionui: Array<Phaser.Sprite>;
     completion: Array<number>;
 
+    rndboolean: boolean = false;
+
 
     constructor(game: Phaser.Game, x: number, y: number, ground: Array<Chunk.Chunk>) {
         super(game);
@@ -121,6 +123,9 @@ export class Player extends Phaser.Group {
     }
 
     addScore(n: number) {
+        if(this.rndboolean) {
+            return;
+        }
         this.score += 100;
         this.scoreui.setText("Score: " + this.score);
         this.game.add.tween(this.scoreui.scale).to({x: 1.25, y: 1.25}, 100).chain(this.game.add.tween(this.scoreui.scale).to({x: 1, y: 1}, 100)).start();
@@ -133,6 +138,7 @@ export class Player extends Phaser.Group {
         this.hpui.setText("HP: " + this.hp);
         this.game.add.tween(this.hpui.scale).to({x: 1.25, y: 1.25}, 100).chain(this.game.add.tween(this.hpui.scale).to({x: 1, y: 1}, 100)).start();
         if(this.hp <= 0) {
+            this.rndboolean = true;
             this.destroy();
         }
     }
@@ -159,7 +165,7 @@ export class Player extends Phaser.Group {
 
     shoot() {
         this.currentShotCD = this.shotCD;
-        var bullet = new Bullet.Bullet(this.game, this.current.position.x, this.current.position.y, this.current.playerType);
+        var bullet = new Bullet.Bullet(this.game, this.current.position.x, this.current.position.y, this.current.playerType, this.infos[this.current.playerType].specializations);
         this.bullets.add(bullet);
     }
 

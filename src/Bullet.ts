@@ -2,10 +2,12 @@ export class Bullet extends Phaser.Sprite {
     speed: number = 1600;
     bulletType: number;
     friendly: boolean;
-    constructor(game: Phaser.Game, x: number, y: number, type: number, friendly: boolean = true) {
+    dmg: Array<number>;
+    constructor(game: Phaser.Game, x: number, y: number, type: number, dmg: Array<number>, friendly: boolean = true) {
         super(game, x, y, 'plr' + (type+1) + '_projectile');
         this.friendly = friendly;
         this.bulletType = type;
+        this.dmg = dmg;
         game.add.existing(this);
         game.physics.arcade.enable(this);
         this.anchor.set(0.5, 0.5);

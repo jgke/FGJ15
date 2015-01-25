@@ -5,10 +5,12 @@ import Player = require("./Player");
 export class Monster extends Phaser.Sprite {
     ground: Array<Chunk.Chunk>;
     hp: number;
-    maxhp: number = 4;
+    maxhp: number = 1;
     monsterType: number;
     constructor(game: Phaser.Game, x: number, y: number, type: number) {
-        super(game, x, y, "place4");
+        super(game, x, y, "1");
+        this.scale.x = 64;
+        this.scale.y= 64;
         this.monsterType = type;
         this.anchor.set(0.5, 0.5);
         switch(type) {
@@ -22,7 +24,7 @@ export class Monster extends Phaser.Sprite {
                 this.tint = 0x0000ff;
                 break;
             case 3:
-                this.tint = 0xff00ff;
+                this.tint = 0xffff00;
                 break;
             default:
                 this.tint = 0x777777;
@@ -47,8 +49,12 @@ export class Monster extends Phaser.Sprite {
         }
     }
 
-    hit(bulletType: number):boolean {
-        this.hp -= (this.monsterType == 4 || this.monsterType == bulletType ? 2 : 1);
+    hit(dmgs: Array<number>):boolean {
+        if(this.monsterType == 4) {
+            this.hp -= 0.5;
+        } else {
+            this.hp -= dmgs[this.monsterType];
+        }
         this.game.add.tween(this.scale).to({ x: Math.random() * 0.75 + 0.5, y: Math.random() * 0.75 + 0.5 }, 100).chain(this.game.add.tween(this.scale).to({x:1, y:1})).start();
         if(this.hp <= 0) {
             this.destroy();
