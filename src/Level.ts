@@ -50,8 +50,7 @@ export class Level extends Phaser.State {
         for(var i = 0; i < 4; i++) {
             this.addChunk();
         }
-        this.addMonster(0);
-        this.monsterType = 0;
+        this.monsterType = 4;
 
         this.blind = this.game.add.sprite(0, 0, '1');
         this.blind.tint = 0xf8f8f8;

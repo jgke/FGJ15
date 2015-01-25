@@ -13,7 +13,7 @@ export class Monster extends Phaser.Sprite {
         this.scale.y= 64;
         this.monsterType = type;
         this.anchor.set(0.5, 0.5);
-        switch(type) {
+        switch(this.monsterType) {
             case 0:
                 this.tint = 0xff0000;
                 break;
@@ -27,7 +27,7 @@ export class Monster extends Phaser.Sprite {
                 this.tint = 0xffff00;
                 break;
             case 666:
-                this.tint = 0xffffff;
+                this.tint = 0x000000;
                 break;
             default:
                 this.tint = 0x777777;
@@ -43,8 +43,17 @@ export class Monster extends Phaser.Sprite {
 
     update() {
         this.game.physics.arcade.collide(this, this.ground, null, null, this);
-        if(this.body.onFloor() || this.body.touching.down) {
-            this.body.velocity.y -= 800;
+        switch(this.monsterType) {
+            case 666:
+                this.body.allowGravity = false;
+                this.body.y = 128 + Math.sin(this.game.time.time/1000) * 128;
+                this.body.x = this.game.camera.x + (this.game.width - 256);
+                break;
+            default:
+                if(this.body.onFloor() || this.body.touching.down) {
+                    this.body.velocity.y -= 800;
+                }
+                break;
         }
         if(this.game.camera.x > this.position.x + 32) {
             (<Player.Player>(<Level.Level>this.game.state.getCurrentState()).player).removeHP(10);
