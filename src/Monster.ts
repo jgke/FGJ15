@@ -1,12 +1,16 @@
 import Chunk = require("./Chunk");
 import Level = require("./Level");
 import Player = require("./Player");
+import Bullet = require("./Bullet");
 
 export class Monster extends Phaser.Sprite {
     ground: Array<Chunk.Chunk>;
     hp: number;
     maxhp: number = 0.5;
     monsterType: number;
+    bossbullets: Phaser.Group;
+    currentShotCD: number = 0;
+    shotCD: number = 15;
     constructor(game: Phaser.Game, x: number, y: number, type: number) {
         super(game, x, y, "1");
         this.scale.x = 64;
@@ -28,6 +32,7 @@ export class Monster extends Phaser.Sprite {
                 break;
             case 666:
                 this.tint = 0x000000;
+                this.bossbullets = new Phaser.Group(this.game);
                 break;
             default:
                 this.tint = 0x777777;
@@ -48,6 +53,12 @@ export class Monster extends Phaser.Sprite {
                 this.body.allowGravity = false;
                 this.body.y = this.game.height - 64*7 - Math.sin(this.game.time.time/1000) * 128;
                 this.body.x = this.game.camera.x + (this.game.width - 256);
+                this.currentShotCD--;
+                if(this.currentShotCD <= 0) {
+                    var bullet = new Bullet.Bullet(this.game, this.position.x, this.position.y, null, null, false);
+                    this.bossbullets.add(bullet);
+                    this.currentShotCD = this.shotCD;
+                }
                 break;
             default:
                 if(this.body.onFloor() || this.body.touching.down) {

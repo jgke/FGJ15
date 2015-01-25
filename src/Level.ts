@@ -15,6 +15,7 @@ export class Level extends Phaser.State {
     blind: Phaser.Sprite;
     monsterType: number;
     nextMonster: boolean = false;
+    boss: Monster.Monster = null;
 
     create() {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -51,6 +52,7 @@ export class Level extends Phaser.State {
             this.addChunk();
         }
         this.monsterType = 4;
+        this.addMonster(666);
 
         this.blind = this.game.add.sprite(0, 0, '1');
         this.blind.tint = 0xf8f8f8;
@@ -78,6 +80,9 @@ export class Level extends Phaser.State {
         var monster = new Monster.Monster(this.game, this.lastdelpos + this.game.width + 200, 100, type);
         monster.ground = this.chunks;
         this.monsters.add(monster);
+        if(type == 666) {
+            this.boss = monster;
+        }
     }
 
     lose() {
@@ -95,12 +100,23 @@ export class Level extends Phaser.State {
             var bulletType = bullet.bulletType;
             if(monster.hit(bullet.dmg)) {
                 this.player.addScore(bulletType);
+                this.player.removeHP(-1);
             }
             bullet.kill();
         });
         this.game.physics.arcade.overlap(this.player.bullets, this.chunks, (bullet) => {
             bullet.kill();
         });
+        if(this.boss != null) {
+            this.game.physics.arcade.overlap(this.player.current, this.boss.bossbullets, (player, bullet) => {
+                var bulletType = bullet.bulletType;
+                this.player.removeHP(1);
+                bullet.kill();
+            });
+            this.game.physics.arcade.overlap(this.boss.bossbullets, this.chunks, (bullet) => {
+                bullet.kill();
+            });
+        }
 
         var ppos = this.camera.x;
         if(ppos - this.lastdelpos > 64 * this.chunks[0].diffX) {
