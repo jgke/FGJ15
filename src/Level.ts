@@ -19,6 +19,9 @@ export class Level extends Phaser.State {
     generateMonsters: boolean = true;
 
     create() {
+        this.generateMonsters = true;
+        this.boss = null;
+        this.nextMonster = false;
         this.game.physics.startSystem(Phaser.Physics.P2JS);
         this.game.physics.arcade.gravity.y = 2000;
         this.game.world.setBounds(0, 0, 1000, 500);
