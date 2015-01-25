@@ -24,9 +24,9 @@ export class Level extends Phaser.State {
         bg.fixedToCamera = true;
         bg.scale.x = this.game.width / bg.width;
         bg.scale.y = this.game.height / bg.height;
-        this.cityimg = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'city720');
+        this.cityimg = this.game.add.tileSprite(0, this.game.height - 240 - 390, this.game.width, this.game.height, 'city720');
         this.cityimg.fixedToCamera = true;
-        this.roadimg = this.game.add.tileSprite(0, 0, this.game.width, this.game.height, 'road720');
+        this.roadimg = this.game.add.tileSprite(0, this.game.height - 245, this.game.width, this.game.height, 'road720');
         this.roadimg.fixedToCamera = true;
         this.monsters = new Phaser.Group(this.game);
         this.player = new Player.Player(this.game, 900, 100, this.chunks);
@@ -102,8 +102,10 @@ export class Level extends Phaser.State {
         if(ppos - this.lastdelpos > 64 * this.chunks[0].diffX) {
             this.removeChunk();
             this.addChunk();
-            this.lastdelpos += 64*this.chunks[0].diffX;
-            this.addMonster(Math.floor(Math.random() * 5));
+            this.lastdelpos += 64 * this.chunks[0].diffX;
+            if (Math.random() > 0.5) {
+                this.addMonster(Math.floor(Math.random() * 5));
+            }
         }
     }
 }
