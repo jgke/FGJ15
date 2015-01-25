@@ -103,7 +103,7 @@ export class Player extends Phaser.Group {
 
     shoot() {
         this.currentShotCD = this.shotCD;
-        var bullet = new Bullet.Bullet(this.game, this.current.position.x, this.current.position.y, 0);
+        var bullet = new Bullet.Bullet(this.game, this.current.position.x, this.current.position.y, this.current.playerType);
         this.bullets.add(bullet);
     }
 

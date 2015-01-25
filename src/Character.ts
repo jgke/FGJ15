@@ -38,21 +38,7 @@ export class Character extends Phaser.Sprite {
 
     setType(x: number) {
         this.playerType = x;
-        var texture = "";
-        switch(x) {
-            case 0:
-                texture = "eugene";
-                break;
-            case 1:
-                texture = "douglas";
-                break;
-            case 2:
-                texture = "steve";
-                break;
-            case 3:
-                texture = "rebecca";
-                break;
-        }
+        var texture = "plr" + (x+1);
         this.loadTexture(texture, 0);
     }
 

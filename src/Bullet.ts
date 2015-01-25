@@ -3,7 +3,7 @@ export class Bullet extends Phaser.Sprite {
     bulletType: number;
     friendly: boolean;
     constructor(game: Phaser.Game, x: number, y: number, type: number, friendly: boolean = true) {
-        super(game, x, y, 'place3');
+        super(game, x, y, 'plr' + (type+1) + '_projectile');
         this.friendly = friendly;
         this.bulletType = type;
         game.add.existing(this);
