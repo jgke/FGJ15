@@ -84,10 +84,10 @@ export class Level extends Phaser.State {
         monster.ground = this.chunks;
         this.monsters.add(monster);
         if(type == 666) {
-            this.game.sound.stopAll();
+            this.bgm.fadeOut();
             this.bgm = this.game.add.audio('bossfight');
             this.bgm.loop = true;
-            this.bgm.play();
+            this.bgm.fadeIn();
             this.boss = monster;
             this.boss.events.onKilled.addOnce(() => {
                 this.game.state.start('GameComplete');
