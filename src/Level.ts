@@ -36,7 +36,7 @@ export class Level extends Phaser.State {
         bg.scale.y = this.game.height / bg.height;
         this.cityimg = this.game.add.tileSprite(0, this.game.height - 240 - 390, this.game.width, this.game.height, 'city720');
         this.cityimg.fixedToCamera = true;
-        this.roadimg = this.game.add.tileSprite(0, this.game.height - 245, this.game.width, this.game.height, 'road720');
+        this.roadimg = this.game.add.tileSprite(0, this.game.height - 210, this.game.width, this.game.height, 'road720');
         this.roadimg.fixedToCamera = true;
         this.monsters = new Phaser.Group(this.game);
         this.player = new Player.Player(this.game, 900, 100, this.chunks);
