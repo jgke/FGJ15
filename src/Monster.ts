@@ -57,7 +57,6 @@ export class Monster extends Phaser.Sprite {
         if(this.monsterType == 4) {
             this.hp -= 0.5;
         } else if(this.monsterType == 666) {
-            this.hp -= 0.01;
         } else {
             this.hp -= dmgs[this.monsterType];
         }

@@ -188,7 +188,7 @@ export class Player extends Phaser.Group {
                 sum += this.completion[i];
             }
             if(sum <= 0) {
-                 // GOTO WINGAME
+                (<Level.Level>this.game.state.getCurrentState()).boss.kill();
             }
             var pos = 0;
             var mul = (this.game.width - 8) / 100;

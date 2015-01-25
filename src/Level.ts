@@ -14,12 +14,9 @@ export class Level extends Phaser.State {
     roadimg: Phaser.TileSprite;
     blind: Phaser.Sprite;
     monsterType: number;
-<<<<<<< HEAD
     nextMonster: boolean = false;
     boss: Monster.Monster = null;
-=======
     generateMonsters: boolean = true;
->>>>>>> graphics
 
     create() {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -56,7 +53,6 @@ export class Level extends Phaser.State {
             this.addChunk();
         }
         this.monsterType = 4;
-        this.addMonster(666);
 
         this.blind = this.game.add.sprite(0, 0, '1');
         this.blind.tint = 0xf8f8f8;
@@ -86,6 +82,9 @@ export class Level extends Phaser.State {
         this.monsters.add(monster);
         if(type == 666) {
             this.boss = monster;
+            this.boss.events.onKilled.addOnce(() => {
+                this.game.state.start('GameComplete');
+            }, this);
         }
     }
 
