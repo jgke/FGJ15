@@ -18,5 +18,10 @@ export class GameOver extends Phaser.State {
             });
         }, this);
         this.game.add.tween(text).to({alpha: 1}, 500).start();
+
+        this.game.sound.stopAll();
+        var bgm = this.game.add.audio('pausemenu');
+        bgm.loop = true;
+        bgm.play();
     }
 }
