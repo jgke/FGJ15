@@ -13,10 +13,8 @@ export class MainMenu extends Phaser.State {
             this.game.width/2,
             this.game.height/4,
             "GOTTA\nGO\nFAST",
-            {font: "70px Arial", fill: "#333", align: "center"}
+            {font: "bold 70px Arial", fill: "#333", align: "center"}
         );
-        this.text.fontWeight = "bold";
-        this.text.fontSize = 70;
         this.text.anchor.set(0.5, 0.5);
         this.text.alpha = 0;
         this.game.add.existing(this.text);
@@ -35,10 +33,8 @@ export class MainMenu extends Phaser.State {
             this.game.width/2,
             this.game.height/4*3,
             "Space - Starts the game\nQ - Help\nW - Story\nO - Credits\nP - ???",
-            {font: "35px Arial", fill: "#333", align: "center"}
+            {font: "bold 35px Arial", fill: "#333", align: "center"}
         );
-        this.prompt.fontWeight = "bold";
-        this.prompt.fontSize = 35;
         this.prompt.anchor.set(0.5, 0.5);
         this.prompt.alpha = 0;
         this.game.add.existing(this.prompt);
