@@ -14,8 +14,12 @@ export class Level extends Phaser.State {
     roadimg: Phaser.TileSprite;
     blind: Phaser.Sprite;
     monsterType: number;
+<<<<<<< HEAD
     nextMonster: boolean = false;
     boss: Monster.Monster = null;
+=======
+    generateMonsters: boolean = true;
+>>>>>>> graphics
 
     create() {
         this.game.physics.startSystem(Phaser.Physics.P2JS);
@@ -85,6 +89,11 @@ export class Level extends Phaser.State {
         }
     }
 
+    b0ss() {
+        this.generateMonsters = false;
+        this.addMonster(666);
+    }
+
     lose() {
         this.blind.visible = true;
         this.blind.bringToTop();
@@ -97,9 +106,10 @@ export class Level extends Phaser.State {
         this.cityimg.tilePosition.x -= 0.75;
         this.roadimg.tilePosition.x -= 1.25;
         this.game.physics.arcade.overlap(this.player.bullets, this.monsters, (bullet, monster) => {
+            var monsterType = monster.monsterType;
             var bulletType = bullet.bulletType;
-            if(monster.hit(bullet.dmg)) {
-                this.player.addScore(bulletType);
+            if(monster.hit(bullet.dmg) || monsterType == 666) {
+                this.player.addScore(monsterType, bulletType);
                 this.player.removeHP(-1);
             }
             bullet.kill();
@@ -126,8 +136,9 @@ export class Level extends Phaser.State {
             if (Math.random() > 0.5) {
                 this.monsterType = Math.floor(Math.random() * 5);
             }
-            //if(this.nextMonster)
-            this.addMonster(this.monsterType)
+            if(this.generateMonsters) {
+                this.addMonster(this.monsterType);
+            }
             //this.nextMonster = !this.nextMonster;
         }
     }

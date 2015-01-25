@@ -26,7 +26,13 @@ export class Preloader extends Phaser.State {
             'plr4_projectile': 'assets/rebecca_projectile.png',
             'plr3_projectile': 'assets/steve_projectile.png',
             '1': 'assets/1.png',
-            "blaze": "assets/blaze.png"
+            "blaze": "assets/blaze.png",
+            "enm1": "assets/brain_fart_enemy.png",
+            "enm2": "assets/hourglass_enemy.png",
+            "enm3": "assets/empty_cigarette_pack_enemy.png",
+            "enm4": "assets/sun_enemy.png",
+            "enm5": "assets/place1.png",
+            "enm667": "assets/boss.png"
         };
 
         var audios = {

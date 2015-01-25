@@ -2,6 +2,7 @@ import Chunk = require("./Chunk");
 import Bullet = require("./Bullet");
 import Character = require("./Character");
 import PlayerInfo = require("./PlayerInfo");
+import Level = require("./Level");
 
 export class Player extends Phaser.Group {
     characters: Array<Character.Character>;
@@ -147,29 +148,59 @@ export class Player extends Phaser.Group {
         this.speedui.scale.x = n * 10;
     }
 
-    addScore(n: number) {
+    addScore(n: number, m: number) {
         if(this.rndboolean) {
             return;
         }
         this.score += 100;
         this.scoreui.setText("Score: " + this.score);
         this.game.add.tween(this.scoreui.scale).to({x: 1.25, y: 1.25}, 100).chain(this.game.add.tween(this.scoreui.scale).to({x: 1, y: 1}, 100)).start();
-        this.completion[n]++;
+        if(n != 666) {
+            this.completion[n]++;
 
-        var pos = 0;
-        var mul = 10;
-        for(var i = 0; i < 5; i++) {
-            var c = this.completion[i];
-            var b = this.completionui[i];
-            if(c > 0) {
-                b.visible = true;
-                b.position.x = 4 + pos * mul;
+            var pos = 0;
+            var mul = (this.game.width - 8) / 100;
+            for (var i = 0; i < 5; i++) {
+                var c = this.completion[i];
+                var b = this.completionui[i];
+                if (c > 0) {
+                    b.visible = true;
+                    b.cameraOffset.x = 4 + (pos * mul);
+                    b.scale.x = c * mul;
+                    pos += c;
+                }
+            }
+
+            if (pos == 5) {
+                (<Level.Level>this.game.state.getCurrentState()).b0ss();
+            }
+            this.infos[this.current.playerType].addTo(n);
+
+        } else {
+            console.log(this.completion);
+            if(this.completion[4] > 0) {
+                this.completion[4]--;
+            } else if(this.completion[m] > 0) {
+                this.completion[m]--;
+            }
+            var sum = 0;
+            for(var i = 0; i < 5; i++) {
+                sum += this.completion[i];
+            }
+            if(sum <= 0) {
+                 // GOTO WINGAME
+            }
+            var pos = 0;
+            var mul = (this.game.width - 8) / 100;
+            for (var i = 0; i < 5; i++) {
+                var c = this.completion[i];
+                var b = this.completionui[i];
+                b.cameraOffset.x = 4 + (pos * mul);
                 b.scale.x = c * mul;
                 pos += c;
             }
         }
 
-        this.infos[this.current.playerType].addTo(n);
     }
 
     removeHP(n: number) {

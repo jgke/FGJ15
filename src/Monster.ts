@@ -12,31 +12,12 @@ export class Monster extends Phaser.Sprite {
     currentShotCD: number = 0;
     shotCD: number = 15;
     constructor(game: Phaser.Game, x: number, y: number, type: number) {
-        super(game, x, y, "1");
-        this.scale.x = 64;
-        this.scale.y= 64;
+        super(game, x, y, "enm" + (type + 1));
         this.monsterType = type;
         this.anchor.set(0.5, 0.5);
-        switch(this.monsterType) {
-            case 0:
-                this.tint = 0xff0000;
-                break;
-            case 1:
-                this.tint = 0x00ff00;
-                break;
-            case 2:
-                this.tint = 0x0000ff;
-                break;
-            case 3:
-                this.tint = 0xffff00;
-                break;
-            case 666:
-                this.tint = 0x000000;
-                this.bossbullets = new Phaser.Group(this.game);
-                break;
-            default:
-                this.tint = 0x777777;
-                break;
+        if(type == 666) {
+            this.bossbullets = new Phaser.Group(this.game);
+
         }
         this.hp = this.maxhp;
         game.add.existing(this);
@@ -75,10 +56,12 @@ export class Monster extends Phaser.Sprite {
     hit(dmgs: Array<number>):boolean {
         if(this.monsterType == 4) {
             this.hp -= 0.5;
+        } else if(this.monsterType == 666) {
+            this.hp -= 0.01;
         } else {
             this.hp -= dmgs[this.monsterType];
         }
-        this.game.add.tween(this.scale).to({ x: Math.random() * 48 + 32, y: Math.random() * 48 + 32 }, 100).chain(this.game.add.tween(this.scale).to({x:64, y:64})).start();
+        this.game.add.tween(this.scale).to({ x: Math.random() * 0.75 + 0.5, y: Math.random() * 0.75 + 0.5 }, 100).chain(this.game.add.tween(this.scale).to({x:1, y:1})).start();
         if(this.hp <= 0) {
             this.destroy();
             return true;
