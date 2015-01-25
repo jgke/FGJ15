@@ -32,7 +32,7 @@ export class MainMenu extends Phaser.State {
             this.game,
             this.game.width/2,
             this.game.height/4*3,
-            "Space - Starts the game\nQ - Help\nW - Story\nO - Credits\nP - ???",
+            "Space - Starts the game\nQ - Help\nW - Credits",
             {font: "bold 35px Arial", fill: "#333", align: "center"}
         );
         this.prompt.anchor.set(0.5, 0.5);
@@ -46,6 +46,7 @@ export class MainMenu extends Phaser.State {
 
         this.addTransition(Phaser.Keyboard.SPACEBAR, 'Level');
         this.addTransition(Phaser.Keyboard.Q, 'Help');
+        this.addTransition(Phaser.Keyboard.W, 'Credits');
 
         this.game.sound.stopAll();
         var bgm = this.game.add.audio('menu');

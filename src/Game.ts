@@ -13,7 +13,7 @@ export class Game extends Phaser.Game {
         this.state.add('Preloader', Preloader.Preloader);
         this.state.add('MainMenu', MainMenu.MainMenu);
         this.state.add('Help', new InfoScreen.InfoScreen("Space - Jump\nQ - Switch to the designer\nW - Switch to the graphics artist\nO - Switch to the sound guy\nP - Switch to the programmer"));
-        this.state.add('Credits', new InfoScreen.InfoScreen("Programming:\n  Juhani Imberg\n  Jaakko Hannikainen"));
+        this.state.add('Credits', new InfoScreen.InfoScreen("Programming: Juhani Imberg & Jaakko Hannikainen\nGraphics: Miika Kukkonen, Miki Korhonen & Tom Nakari\nAudio: Ami Lagergren, Miki Korhonen,\n           Niko Liljeblad & Kasper Sirenius"));
         this.state.add('Level', Level.Level);
         this.state.add('GameOver', GameOver.GameOver);
         this.state.add('GameComplete', GameComplete.GameComplete);
