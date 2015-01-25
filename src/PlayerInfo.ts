@@ -13,9 +13,9 @@ export class PlayerInfo extends Phaser.Group {
         this.fixedToCamera = true;
         this.bg = new Phaser.Sprite(this.game, this.x, this.y, '1');
         this.bg.fixedToCamera = true;
-        this.bg.scale.y = 64;
+        this.bg.scale.y = 32;
         this.bg.scale.x = (this.game.width/4);
-        this.bg.tint = 0xf8f8f8;
+        this.bg.tint = 0x333333;
         this.add(this.bg);
         this.game.add.existing(this.bg);
         for(var i = 0; i < 4; i++) {
@@ -59,7 +59,7 @@ export class PlayerInfo extends Phaser.Group {
                 break;
         }
         this.namerender = new Phaser.Text(this.game, this.x, this.y, this.name, {
-            fill: "#333", font: "bold 18px Arial", align: "right"
+            fill: "#f8f8f8", font: "bold 18px Arial", align: "right"
         });
         this.namerender.fixedToCamera = true;
         this.add(this.namerender);
@@ -87,12 +87,12 @@ export class PlayerInfo extends Phaser.Group {
 
     select() {
         this.selected = true;
-        this.bg.tint = 0xcccccc;
+        this.bg.tint = 0x555555;
     }
 
     unselect() {
         this.selected = false;
-        this.bg.tint = 0xf8f8f8;
+        this.bg.tint = 0x333333;
     }
 
 }

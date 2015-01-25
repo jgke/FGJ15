@@ -90,17 +90,39 @@ export class Player extends Phaser.Group {
         this.game.add.existing(this.speedui);*/
 
         this.completion = [];
+        this.completionui = [];
+
+        this.completionbg = new Phaser.Sprite(this.game, 0, this.game.height - 32, '1');
+        this.completionbg.fixedToCamera = true;
+        this.completionbg.scale.y = 32;
+        this.completionbg.scale.x = this.game.width;
+        this.completionbg.tint = 0x333333;
+        this.game.add.existing(this.completionbg);
+
         for(var i = 0; i < 4; i++) {
             this.completion[i] = 0;
+            var bar = new Phaser.Sprite(this.game, 4, this.game.height - 28, '1');
+            switch(i) {
+                case 0:
+                    bar.tint = 0xff0000;
+                    break;
+                case 1:
+                    bar.tint = 0x00ff00;
+                    break;
+                case 2:
+                    bar.tint = 0x0000ff;
+                    break;
+                case 3:
+                    bar.tint = 0xffff00;
+                    break;
+            }
+            bar.scale.y = 32 - 8;
+            bar.fixedToCamera = true;
+            bar.visible = false;
+            this.add(bar);
+            this.completionui.push(bar);
+            this.game.add.existing(bar);
         }
-
-        this.completionbg = new Phaser.Sprite(this.game, 0, this.game.height - 64, '1');
-        this.completionbg.fixedToCamera = true;
-        this.completionbg.scale.y = 64;
-        this.completionbg.scale.x = this.game.width;
-        this.completionbg.tint = 0xf8f8f8;
-        this.completionbg.visible = false;
-        this.game.add.existing(this.completionbg);
 
         this.infos = [];
         for(var i = 0; i < 4; i++) {
@@ -130,6 +152,18 @@ export class Player extends Phaser.Group {
         this.scoreui.setText("Score: " + this.score);
         this.game.add.tween(this.scoreui.scale).to({x: 1.25, y: 1.25}, 100).chain(this.game.add.tween(this.scoreui.scale).to({x: 1, y: 1}, 100)).start();
         this.completion[n]++;
+        var pos = 0;
+        var mul = 10;
+        for(var i = 0; i < 4; i++) {
+            var c = this.completion[i];
+            var b = this.completionui[i];
+            if(c > 0) {
+                b.visible = true;
+                b.x = 4 + pos * mul;
+                b.scale.x = c * mul;
+                pos += c;
+            }
+        }
         this.infos[this.current.playerType].addTo(n);
     }
 
