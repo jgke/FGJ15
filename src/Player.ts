@@ -1,8 +1,10 @@
 import Chunk = require("./Chunk");
 import Bullet = require("./Bullet");
 import Character = require("./Character");
+import PlayerInfo = require("./PlayerInfo");
 
 export class Player extends Phaser.Group {
+    characters: Array<Character.Character>;
     speed: number = 7;
     currentShotCD: number;
     shotCD: number = 15;
@@ -18,6 +20,14 @@ export class Player extends Phaser.Group {
     hp: number;
     scoreui: Phaser.Text;
     hpui: Phaser.Text;
+    speedui: Phaser.Sprite;
+    lastx: number = 0;
+
+    infos: Array<PlayerInfo.PlayerInfo>;
+
+    completionbg: Phaser.Sprite;
+    completionui: Array<Phaser.Sprite>;
+    completion: Array<number>;
 
 
     constructor(game: Phaser.Game, x: number, y: number, ground: Array<Chunk.Chunk>) {
@@ -25,6 +35,7 @@ export class Player extends Phaser.Group {
 
         game.camera.focusOn(this);
 
+        this.characters = [];
         this.currentShotCD = this.shotCD;
         this.bullets = new Phaser.Group(this.game);
         this.ground = ground;
@@ -47,6 +58,7 @@ export class Player extends Phaser.Group {
                 this.current = character;
             }
             this.add(character);
+            this.characters.push(character);
         }
 
         var bgui = new Phaser.Sprite(this.game, 0, 0, '1');
@@ -68,12 +80,52 @@ export class Player extends Phaser.Group {
         this.hpui.anchor.set(0.5, 0.5);
         this.hpui.fixedToCamera = true;
         this.game.add.existing(this.hpui);
+
+        /*this.speedui = new Phaser.Sprite(this.game, 400, 4, '1');
+        this.speedui.fixedToCamera = true;
+        this.speedui.tint = 0x333;
+        this.speedui.scale.y = 24;
+        this.game.add.existing(this.speedui);*/
+
+        this.completion = [];
+        for(var i = 0; i < 4; i++) {
+            this.completion[i] = 0;
+        }
+
+        this.completionbg = new Phaser.Sprite(this.game, 0, this.game.height - 64, '1');
+        this.completionbg.fixedToCamera = true;
+        this.completionbg.scale.y = 64;
+        this.completionbg.scale.x = this.game.width;
+        this.completionbg.tint = 0xf8f8f8;
+        this.completionbg.visible = false;
+        this.game.add.existing(this.completionbg);
+
+        this.infos = [];
+        for(var i = 0; i < 4; i++) {
+            var info = new PlayerInfo.PlayerInfo(this.game, i);
+            this.add(info);
+            this.bringToTop(info);
+            this.infos.push(info);
+            if(i == 3) {
+                info.select();
+            }
+        }
+    }
+
+    changeSpeed(n: number) {
+        this.speed = n;
+        for(var c in this.children) {
+            (<Character.Character>this.children[c]).speed = n;
+        }
+        this.speedui.scale.x = n * 10;
     }
 
     addScore(n: number) {
-        this.score += n;
+        this.score += 100;
         this.scoreui.setText("Score: " + this.score);
         this.game.add.tween(this.scoreui.scale).to({x: 1.25, y: 1.25}, 100).chain(this.game.add.tween(this.scoreui.scale).to({x: 1, y: 1}, 100)).start();
+        this.completion[n]++;
+        this.infos[this.current.playerType].addTo(n);
     }
 
     removeHP(n: number) {
@@ -87,8 +139,8 @@ export class Player extends Phaser.Group {
 
     switchCharacter(n: number) {
         var op, np, nt;
-        for(var i = 0; i < this.children.length; i++) {
-            var c = <Character.Character>this.children[i];
+        for(var i = 0; i < this.characters.length; i++) {
+            var c = this.characters[i];
             if(c.playerType == n) {
                 np = i;
                 nt = c.playerType;
@@ -97,7 +149,11 @@ export class Player extends Phaser.Group {
                 op = i;
             }
         }
-        (<Character.Character>this.children[np]).setType(this.current.playerType);
+        this.characters[np].setType(this.current.playerType);
+        for(var i = 0; i < 4; i++) {
+            this.infos[i].unselect();
+        }
+        this.infos[nt].select();
         this.current.setType(nt);
     }
 
@@ -139,6 +195,8 @@ export class Player extends Phaser.Group {
             this.switchCharacter(3);
         }
 
+        //this.speedui.scale.x = (this.lastx - this.current.position.x) * -50;
+        this.lastx = this.current.position.x;
         var relX = this.current.position.x - this.game.camera.x;
         this.xhist.shift();
         this.yhist.shift();
@@ -148,13 +206,13 @@ export class Player extends Phaser.Group {
         this.grounded.push(this.current.jumpable());
         var modifier = 0;
         for(var i = 0; i < 3; i++) {
-            this.children[i].position.x = this.xhist[i*10];
-            this.children[i].position.y = this.yhist[i*10];
+            this.characters[i].position.x = this.xhist[i*10];
+            this.characters[i].position.y = this.yhist[i*10];
         }
         for(var i = 0; i < 4; i++) {
-            var child = <Character.Character>this.children[i];
+            var child = this.characters[i];
             if(this.grounded[i * 10]) {
-                (<Character.Character>child).emitter.start(true, 400, null, 1);
+                child.emitter.start(true, 400, null, 1);
             }
             /*
             else if(this.grounded[i*10 - 1]) {

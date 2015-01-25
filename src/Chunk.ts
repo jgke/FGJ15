@@ -49,7 +49,7 @@ export class Chunk extends Phaser.Group {
                     case 1:
                         this.add(new GroundTile.GroundTile(this.game,
                                                            offset * 64 + x * 64,
-                                                           y * 64 + (game.height - 64 * this.diffY)));
+                                                           y * 64 + (game.height - 64 * (this.diffY + 1))));
                 }
             }
         }

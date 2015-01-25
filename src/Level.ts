@@ -58,6 +58,7 @@ export class Level extends Phaser.State {
         this.game.add.tween(this.blind).to({alpha: 0}, 1000).start().onComplete.addOnce(() => {
             this.blind.visible = false;
         }, this);
+        this.player.z = 9000;
     }
 
     addChunk(val=-1) {
@@ -89,8 +90,9 @@ export class Level extends Phaser.State {
         this.cityimg.tilePosition.x -= 0.75;
         this.roadimg.tilePosition.x -= 1.25;
         this.game.physics.arcade.overlap(this.player.bullets, this.monsters, (bullet, monster) => {
+            var bulletType = bullet.bulletType;
             if(monster.hit(bullet.bulletType)) {
-                this.player.addScore(100);
+                this.player.addScore(bulletType);
             }
             bullet.kill();
         });
